@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +35,13 @@ public class SubtaskAdapter extends RecyclerView
             .OnClickListener {
         TextView subtaskName;
         CheckBox subtaskDone;
-
+        LinearLayout linearLayout;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             subtaskName = (TextView) itemView.findViewById(R.id.subtask_name);
             subtaskDone = (CheckBox) itemView.findViewById(R.id.subtask_done);
-
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.subtasks_linear_layout);
             itemView.setOnClickListener(this);
         }
 
@@ -111,11 +112,24 @@ public class SubtaskAdapter extends RecyclerView
             @Override
             public void onClick(View v) {
 
-                    holder.subtaskDone.setChecked(!holder.subtaskDone.isChecked());
+                holder.subtaskDone.setChecked(!holder.subtaskDone.isChecked());
             }
         });
 
+        if (subtasks.isEmpty()) {
+            holder.linearLayout.setVisibility(View.GONE);
+        } else {
+            holder.linearLayout.setVisibility(View.VISIBLE);
+        }
 
+        holder.subtaskName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                deleteTask(position);
+                return true;
+            }
+        });
     }
 
     public void addTask(Subtask dataObj) {

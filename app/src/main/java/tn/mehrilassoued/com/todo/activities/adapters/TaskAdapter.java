@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.parse.ParseException;
@@ -42,6 +43,7 @@ public class TaskAdapter extends RecyclerView
         LinearLayout deleteLayout;
         LinearLayout hiLayout;
 
+
         public DataObjectHolder(View itemView) {
             super(itemView);
             task_name = (TextView) itemView.findViewById(R.id.task_name);
@@ -50,6 +52,7 @@ public class TaskAdapter extends RecyclerView
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
             deleteLayout = (LinearLayout) itemView.findViewById(R.id.delete_layout);
             hiLayout = (LinearLayout) itemView.findViewById(R.id.hi_layout);
+
             itemView.setOnClickListener(this);
         }
 
@@ -145,6 +148,8 @@ public class TaskAdapter extends RecyclerView
                 context.startActivity(intent);
             }
         });
+
+
     }
 
     private void setAllSubtasksDone(int position) {
@@ -192,6 +197,12 @@ public class TaskAdapter extends RecyclerView
         tasks.add(index, dataObj);
         notifyDataSetChanged();
     }
+
+    public void addTask(Task dataObj) {
+        tasks.add(dataObj);
+        notifyDataSetChanged();
+    }
+
 
     public void deleteTask(int index) {
         Task task = tasks.get(index);

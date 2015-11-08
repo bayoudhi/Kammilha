@@ -60,7 +60,9 @@ public class HomeActivity extends AppCompatActivity {
         // Code to remove an item with default animation
         //((MyRecyclerViewAdapter) mAdapter).deleteTask(index);
 
-
+        if (getDataSet().isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -114,15 +116,11 @@ public class HomeActivity extends AppCompatActivity {
         String btnName = null;
 
         switch (itemId) {
-            case R.id.menu_settings:
+
+            case R.id.action_settings:
                 btnName = "Settings";
                 break;
-            case R.id.menu_compass:
-                btnName = "Compass";
-                break;
-            case R.id.menu_help:
-                btnName = "Help";
-                break;
+
 
         }
         Toast.makeText(HomeActivity.this, "Button ==" + btnName, Toast.LENGTH_SHORT).show();
@@ -130,10 +128,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void addTask(View view) {
-        if (newTaskEditText.getVisibility() == View.GONE) {
-            newTaskEditText.setVisibility(View.VISIBLE);
-            newTaskEditText.requestFocus();
-        }
 
 
         if (!newTaskEditText.getText().toString().isEmpty()) {
@@ -149,9 +143,11 @@ public class HomeActivity extends AppCompatActivity {
 
             try {
                 task.pin(StarterApplication.TODO_GROUP_NAME);
-                ((TaskAdapter) mAdapter).addTask(task, 0);
+                ((TaskAdapter) mAdapter).addTask(task);
                 newTaskEditText.setText("");
-                newTaskEditText.setVisibility(View.GONE);
+                newTaskEditText.clearFocus();
+                Toast.makeText(HomeActivity.this, "Task added", Toast.LENGTH_SHORT).show();
+                mRecyclerView.setVisibility(View.VISIBLE);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

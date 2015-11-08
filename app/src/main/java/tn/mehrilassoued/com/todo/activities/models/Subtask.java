@@ -32,15 +32,6 @@ public class Subtask extends ParseObject{
 
 
 
-    //UUID
-    public void setUuidString() {
-        UUID uuid = UUID.randomUUID();
-        put("uuid", uuid.toString());
-    }
-
-    public String getUuidString() {
-        return getString("uuid");
-    }
 
     //query
     public static ParseQuery<Subtask> getQuery() {

@@ -1,5 +1,6 @@
 package tn.mehrilassoued.com.todo.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,16 +15,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import tn.mehrilassoued.com.todo.R;
 import tn.mehrilassoued.com.todo.activities.adapters.SubtaskAdapter;
@@ -32,6 +36,7 @@ import tn.mehrilassoued.com.todo.activities.models.Subtask;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
 public class TaskActivity extends AppCompatActivity {
+    private int id;
     private Task task;
     private EditText nameEditText;
     private EditText noteEditText;
@@ -46,8 +51,8 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
         setToolBar();
 
-        int position = Integer.valueOf(getIntent().getStringExtra("id"));
-        task = TaskAdapter.tasks.get(position);
+        id = Integer.valueOf(getIntent().getStringExtra("id"));
+        task = TaskAdapter.tasks.get(id);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.subtasks_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -120,6 +125,9 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
+        if(getDataSet().isEmpty()){
+            mRecyclerView.setVisibility(View.GONE);
+        }
 
     }
 
@@ -166,6 +174,23 @@ public class TaskActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_delete) {
+            new MaterialDialog.Builder(this)
+                    .title("Delete Task")
+                    .content("Are you sure?")
+                    .positiveText("Yes").negativeText("No").
+                    onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            task.deleteEventually();
+                            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(TaskActivity.this, "Task deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    }).
+                    show();
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -201,8 +226,8 @@ public class TaskActivity extends AppCompatActivity {
                             subtask.add("parent", task);
                             subtask.pin(StarterApplication.TODO_GROUP_NAME);
                             ((SubtaskAdapter) mAdapter).addTask(subtask);
-
-
+                            Toast.makeText(getApplicationContext(), "Subtask added", Toast.LENGTH_SHORT).show();
+                            mRecyclerView.setVisibility(View.VISIBLE);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
