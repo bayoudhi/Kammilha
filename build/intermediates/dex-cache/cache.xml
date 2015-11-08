@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-a7f905c147a2534e5a77edcd8dfb717e3b6c1516.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-20a10c3daa72365019b9b4cb01b25c2a94698576.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.3.0\8a62fd16fcc1c06f284fc98e6cbded2a5af1dd4c\bolts-tasks-1.3.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8a62fd16fcc1c06f284fc98e6cbded2a5af1dd4c">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\bolts-tasks-1.3.0-861707d1b67d9d369ac85d330e509e36253a2215.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.daimajia.swipelayout\library\1.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e84b30031d4bab89a2b5c45af4eb9213828524dd">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-d18e554b3f703019d55b7d4c10d4de1d775acacb.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-44ca5b82255ce814e3b4b20e008ecd933926e2a0.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-ef9e25fa55f2e2ae4ec60fd807080733562c69a4.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\.gradle\caches\modules-2\files-2.1\com.parse\parse-android\1.10.3\36366e460af2c0f224bb8f70b64e3302f638b138\parse-android-1.10.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="36366e460af2c0f224bb8f70b64e3302f638b138">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\parse-android-1.10.3-15cb6877c64eba18b8e16c679ad0f45146e6ff13.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-applinks\1.3.0\bc535105332645408ef5f1380215cc954b842178\bolts-applinks-1.3.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="bc535105332645408ef5f1380215cc954b842178">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\bolts-applinks-1.3.0-023b80c2f682e5eeaeb4b3616f8afe6d0a0c18d4.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-ecd8361d6657dbf4acd046130d4ff35c6a3a8776.jar" />
+    </item>
+    <item
+        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-dfa9690884fc4626e7d8959d3aa86fd7bb9c0fe4.jar" />
+    </item>
+
+</items>
