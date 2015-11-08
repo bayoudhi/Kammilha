@@ -1,32 +1,34 @@
 package tn.mehrilassoued.com.todo.activities.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
 import tn.mehrilassoued.com.todo.activities.StarterApplication;
+import tn.mehrilassoued.com.todo.activities.TaskActivity;
+import tn.mehrilassoued.com.todo.activities.models.Subtask;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
 public class TaskAdapter extends RecyclerView
         .Adapter<TaskAdapter
         .DataObjectHolder> {
     private static String LOG_TAG = "TaskAdapter";
-    private List<Task> tasks;
+    public static List<Task> tasks;
     private Context context;
     private static MyClickListener myClickListener;
 
@@ -86,25 +88,25 @@ public class TaskAdapter extends RecyclerView
 
         if (holder.task_Done.isChecked()) {
             holder.task_name.setPaintFlags(holder.task_name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }else{
+        } else {
             holder.task_name.setPaintFlags(holder.task_name.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
         }
-        /*holder.task_Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*holder.subtaskDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    holder.task_name.setPaintFlags(holder.task_name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.subtaskName.setPaintFlags(holder.subtaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     try {
-                        Task task = tasks.get(position);
+                        Task task = subtasks.get(position);
                         task.setDone(true);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    holder.task_name.setPaintFlags(holder.task_name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    holder.subtaskName.setPaintFlags(holder.subtaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     try {
-                        Task task = tasks.get(position);
+                        Task task = subtasks.get(position);
                         task.setDone(false);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {
@@ -126,20 +128,59 @@ public class TaskAdapter extends RecyclerView
         holder.hiLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setTaskToDone(position);
+                setTaskDone(position);
+                setAllSubtasksDone(position);
             }
         });
 
         holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.deleteLayout);
         holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.hiLayout);
+
+        holder.task_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, TaskActivity.class);
+
+                intent.putExtra("id", String.valueOf(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
-    public void setTaskToDone(int position) {
-        Task task=tasks.get(position);
+    private void setAllSubtasksDone(int position) {
+        List<Subtask> results = new ArrayList<Subtask>();
+        Task task = tasks.get(position);
+
+        ParseQuery<Subtask> query = Subtask.getQuery();
+        query.whereEqualTo("parent", task);
+        query.fromLocalDatastore();
+        try {
+            results = query.find();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for (Subtask subtask : results) {
+
+            try {
+                subtask.setDone(true);
+                subtask.pin(StarterApplication.TODO_GROUP_NAME);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                subtask.setDone(false);
+            }
+        }
+
+
+    }
+
+    public void setTaskDone(int position) {
+        Task task = tasks.get(position);
         task.setDone(!task.isDone());
         try {
             task.pin(StarterApplication.TODO_GROUP_NAME);
-            tasks.set(position,task);
+            tasks.set(position, task);
             notifyDataSetChanged();
         } catch (ParseException e) {
             e.printStackTrace();

@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include">
+
+        <EditText
+            android:id="@+id/new_task_name"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="I want to"
+            android:singleLine="true"
+            android:textSize="32dp"
+            android:visibility="gone" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/input_layout_password"
+        android:scrollbars="vertical" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_task_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:onClick="addTask" />
+
+
+</RelativeLayout><!-- From: file:/C:/Users/azize/Dropbox/TODO/app/src/main/res/layout/activity_home.xml -->

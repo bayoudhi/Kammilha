@@ -21,6 +21,15 @@ public class Task extends ParseObject {
         put("name", name);
     }
 
+    //note
+    public String getNote() {
+        return getString("note");
+    }
+
+    public void setNote(String note) {
+        put("note", note);
+    }
+
     //done
     public boolean isDone() {
         return getBoolean("done");

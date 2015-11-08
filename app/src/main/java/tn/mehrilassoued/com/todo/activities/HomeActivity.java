@@ -1,5 +1,6 @@
 package tn.mehrilassoued.com.todo.activities;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -60,23 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         //((MyRecyclerViewAdapter) mAdapter).deleteTask(index);
 
 
-/*
-        Task task = new Task();
-        task.setAuthor(ParseUser.getCurrentUser());
-        task.setUuidString();
-        task.setName("Hamza");
-        task.setDraft(true);
-        task.setImportant(false);
-        task.setDone(false);
-
-        try {
-            task.pin(StarterApplication.TODO_GROUP_NAME);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
-
     }
 
     @Override
@@ -89,6 +73,8 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(HomeActivity.this, " Clicked on Item " + position, Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     private List<Task> getDataSet() {
@@ -151,7 +137,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
         if (!newTaskEditText.getText().toString().isEmpty()) {
-
 
 
             Task task = new Task();

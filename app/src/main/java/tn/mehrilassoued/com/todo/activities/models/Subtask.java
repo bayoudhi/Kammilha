@@ -9,6 +9,8 @@ import java.util.UUID;
 
 @ParseClassName("Subtask")
 public class Subtask extends ParseObject{
+
+
     //name
     public String getName() {
         return getString("name");
@@ -41,8 +43,8 @@ public class Subtask extends ParseObject{
     }
 
     //query
-    public static ParseQuery<Task> getQuery() {
-        return ParseQuery.getQuery(Task.class);
+    public static ParseQuery<Subtask> getQuery() {
+        return ParseQuery.getQuery(Subtask.class);
     }
 
     //draft
