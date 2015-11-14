@@ -2,53 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\azize\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
+        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.wdullaer\materialdatetimepicker\2.0.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
-        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-204956984b22ca22843049a42553297f36374ebe.jar" />
-    </item>
-    <item
-        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.github.afollestad.material-dialogs\core\0.8.5.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c832b621cf1959cc9e89170cfe3922e8ed1e12aa">
-        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-a77a2251078450ac47912bb07d508fda0bf5ecf9.jar" />
-    </item>
-    <item
-        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-ed82e796ad5758514169bd4d10f68432a9df5618.jar" />
-    </item>
-    <item
-        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
-        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-536c28a32858109aaaf284e3fe8f84c53680c630.jar" />
-    </item>
-    <item
-        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\me.zhanghai.android.materialprogressbar\library\1.1.4\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="2a24cba08e1d865a79e61335f5a1bd64d520106d">
-        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-82b20df94d493dd6bfac2a103dd10e7d89cd4fd6.jar" />
-    </item>
-    <item
-        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-50b5de1724d61d7ecf4f48b19d7c7dc8b5c88ccf.jar" />
-    </item>
-    <item
-        jar="C:\Users\azize\Dropbox\TODO\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
-        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-173fa31b5f1d44e281511ee99f0f2ebb6ec0ae72.jar" />
+        sha1="8b1e6f58788723776464fe4c14a73ab8ddf02110">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-6f935aea04b70759314d7399ea860a0a8db7eed1.jar" />
     </item>
 
 </items>

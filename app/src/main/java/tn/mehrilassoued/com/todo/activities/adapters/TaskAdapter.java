@@ -2,6 +2,7 @@ package tn.mehrilassoued.com.todo.activities.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,20 +39,22 @@ public class TaskAdapter extends RecyclerView
             .OnClickListener {
         TextView task_name;
         CheckBox task_Done;
-        TextView deleteButton;
+        TextView importantButton;
         SwipeLayout swipeLayout;
-        LinearLayout deleteLayout;
+        LinearLayout importantLayout;
         LinearLayout hiLayout;
+        TextView task_date;
 
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             task_name = (TextView) itemView.findViewById(R.id.task_name);
             task_Done = (CheckBox) itemView.findViewById(R.id.task_done);
-            deleteButton = (TextView) itemView.findViewById(R.id.delete);
+            importantButton = (TextView) itemView.findViewById(R.id.important);
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
-            deleteLayout = (LinearLayout) itemView.findViewById(R.id.delete_layout);
+            importantLayout = (LinearLayout) itemView.findViewById(R.id.important_layout);
             hiLayout = (LinearLayout) itemView.findViewById(R.id.hi_layout);
+            task_date=(TextView)itemView.findViewById(R.id.task_date);
 
             itemView.setOnClickListener(this);
         }
@@ -89,10 +92,24 @@ public class TaskAdapter extends RecyclerView
         holder.task_name.setText(tasks.get(position).getName());
         holder.task_Done.setChecked(tasks.get(position).isDone());
 
+        Task task = tasks.get(position);
+
         if (holder.task_Done.isChecked()) {
             holder.task_name.setPaintFlags(holder.task_name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             holder.task_name.setPaintFlags(holder.task_name.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+
+        if (task.isImportant()) {
+            holder.task_name.setTextColor(Color.RED);
+        } else
+            holder.task_name.setTextColor(Color.BLACK);
+
+        if (task.get("date") != null) {
+            if (task.get("time") != null)
+                holder.task_date.setText(" at " + task.get("time").toString() + " " + task.get("date"));
+            else
+                holder.task_date.setText(" on " + task.get("date"));
         }
         /*holder.subtaskDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -119,11 +136,11 @@ public class TaskAdapter extends RecyclerView
             }
         });*/
 
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+        holder.importantButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                deleteTask(position);
+                setTaskImportant(position);
 
             }
         });
@@ -136,7 +153,7 @@ public class TaskAdapter extends RecyclerView
             }
         });
 
-        holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.deleteLayout);
+        holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, holder.importantLayout);
         holder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, holder.hiLayout);
 
         holder.task_name.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +167,19 @@ public class TaskAdapter extends RecyclerView
         });
 
 
+    }
+
+    private void setTaskImportant(int position) {
+        Task task = tasks.get(position);
+
+        try {
+            task.setImportant(!task.isImportant());
+            task.pin(StarterApplication.TODO_GROUP_NAME);
+            notifyDataSetChanged();
+        } catch (ParseException e) {
+            task.setImportant(task.isImportant());
+            e.printStackTrace();
+        }
     }
 
     private void setAllSubtasksDone(int position) {
@@ -182,8 +212,9 @@ public class TaskAdapter extends RecyclerView
 
     public void setTaskDone(int position) {
         Task task = tasks.get(position);
-        task.setDone(!task.isDone());
+
         try {
+            task.setDone(!task.isDone());
             task.pin(StarterApplication.TODO_GROUP_NAME);
             tasks.set(position, task);
             notifyDataSetChanged();

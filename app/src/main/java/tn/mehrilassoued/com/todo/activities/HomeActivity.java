@@ -63,6 +63,8 @@ public class HomeActivity extends AppCompatActivity {
         if (getDataSet().isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
         }
+
+
     }
 
     @Override
@@ -128,7 +130,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void addTask(View view) {
-
+        if (!newTaskEditText.isFocusable())
+            newTaskEditText.requestFocus();
 
         if (!newTaskEditText.getText().toString().isEmpty()) {
 
@@ -141,16 +144,15 @@ public class HomeActivity extends AppCompatActivity {
             task.setImportant(false);
             task.setDone(false);
 
-            try {
-                task.pin(StarterApplication.TODO_GROUP_NAME);
+
+                task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
+
                 ((TaskAdapter) mAdapter).addTask(task);
                 newTaskEditText.setText("");
                 newTaskEditText.clearFocus();
                 Toast.makeText(HomeActivity.this, "Task added", Toast.LENGTH_SHORT).show();
                 mRecyclerView.setVisibility(View.VISIBLE);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
 
         }
     }

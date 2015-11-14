@@ -15,6 +15,7 @@ import com.parse.ParseACL;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import tn.mehrilassoued.com.todo.activities.models.List;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
@@ -31,6 +32,7 @@ public class StarterApplication extends Application {
     Parse.enableLocalDatastore(getApplicationContext());
 
     //Adding subclasses
+    ParseObject.registerSubclass(List.class);
     ParseObject.registerSubclass(Task.class);
     ParseObject.registerSubclass(Subtask.class);
 

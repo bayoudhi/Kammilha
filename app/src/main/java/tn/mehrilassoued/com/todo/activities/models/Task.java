@@ -84,4 +84,15 @@ public class Task extends ParseObject {
     public void setDraft(boolean isDraft) {
         put("draft", isDraft);
     }
+
+
+    /*
+    //list
+    public String getList() {
+        return getString("parent");
+    }
+
+    public void setList(List list) {
+        put("parent", list);
+    }*/
 }

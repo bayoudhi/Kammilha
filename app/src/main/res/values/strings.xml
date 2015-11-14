@@ -14,4 +14,11 @@
     <color name="divider">#B6B6B6</color>
     <string name="title_activity_task">Task</string>
     <string name="action_delete">Delete</string>
+    <string name="title">Title</string>
+    <string name="choose">Choose</string>
+    <string name="socialNetworks">Social Networking</string>
+    <string name="input">Input</string>
+    <string name="input_content">Input String</string>
+    <string name="input_hint">Input hint</string>
+    <string name="input_prefill">Input fiull</string>
 </resources>

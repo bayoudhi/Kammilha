@@ -8,7 +8,7 @@ import java.util.UUID;
 
 
 @ParseClassName("Subtask")
-public class Subtask extends ParseObject{
+public class Subtask extends ParseObject {
 
 
     //name
@@ -29,8 +29,15 @@ public class Subtask extends ParseObject{
         put("done", done);
     }
 
+    /*
+    //task
+    public String getTask() {
+        return getString("parent");
+    }
 
-
+    public void setTask(Task task) {
+        put("parent", task);
+    }*/
 
 
     //query

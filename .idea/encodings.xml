@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/tn/mehrilassoued/com/todo/activities/StarterApplication.java" charset="windows-1256" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/tn/mehrilassoued/com/todo/activities/adapters" charset="windows-1256" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/tn/mehrilassoued/com/todo/activities/models/DueDate.java" charset="windows-1256" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/tn/mehrilassoued/com/todo/activities/models/List.java" charset="windows-1256" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/tn/mehrilassoued/com/todo/activities/models/Subtask.java" charset="windows-1256" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/tn/mehrilassoued/com/todo/activities/models/Task.java" charset="windows-1256" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/tasks_row.xml" charset="windows-1256" />

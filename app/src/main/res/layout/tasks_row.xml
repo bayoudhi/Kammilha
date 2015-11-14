@@ -23,34 +23,35 @@
                 android:layout_margin="2dp"
                 android:text="Done"
                 android:textColor="#ffffff"
-                android:textSize="32sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/delete_layout"
+            android:id="@+id/important_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#FF5534"
             android:gravity="center">
 
             <TextView
-                android:id="@+id/delete"
+                android:id="@+id/important"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="Delete"
+                android:text="Important"
                 android:textColor="#ffffff"
-                android:textSize="32sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
-            android:elevation="5dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:elevation="10dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:weightSum="1">
 
 
             <CheckBox
@@ -62,9 +63,16 @@
             <TextView
                 android:id="@+id/task_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:tag="Hover"
                 android:textSize="24sp" />
+            <TextView
+                android:id="@+id/task_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tag="Hover"
+                android:textSize="12sp"
+                />
         </LinearLayout>
     </com.daimajia.swipe.SwipeLayout>
 </LinearLayout>
