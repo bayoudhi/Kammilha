@@ -1,6 +1,8 @@
 package tn.mehrilassoued.com.todo.activities;
 
 import android.content.Intent;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
@@ -81,11 +85,83 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private List<Task> getDataSetDone() {
+        List results = new ArrayList<Task>();
+
+
+        ParseQuery<Task> query = Task.getQuery();
+        query.orderByAscending("date");
+        query.whereEqualTo("done", true);
+        query.fromLocalDatastore();
+        try {
+            results = query.find();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+
+    private List<Task> getDataSetToday() {
+        List results = new ArrayList<Task>();
+
+        Date nextDay = new Date();
+        nextDay.setTime(System.currentTimeMillis());
+        Calendar c = Calendar.getInstance();
+        c.setTime(nextDay);
+        c.add(Calendar.DATE, 2);
+        nextDay = c.getTime();
+
+        Date currentDay = new Date();
+        c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        currentDay.setTime(c.getTimeInMillis());
+
+
+        ParseQuery<Task> query = Task.getQuery();
+
+        query.whereGreaterThanOrEqualTo("date", currentDay);
+        query.orderByAscending("date");
+        query.whereLessThan("date", nextDay);
+        query.fromLocalDatastore();
+        try {
+            results = query.find();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
     private List<Task> getDataSet() {
         List results = new ArrayList<Task>();
 
 
         ParseQuery<Task> query = Task.getQuery();
+        query.orderByAscending("date");
+        query.fromLocalDatastore();
+        try {
+            results = query.find();
+            System.out.println(results.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    private List<Task> getDataSetNotDone() {
+        List results = new ArrayList<Task>();
+
+
+        ParseQuery<Task> query = Task.getQuery();
+        //query.orderByAscending("date");
+        query.whereEqualTo("done", false);
         query.fromLocalDatastore();
         try {
             results = query.find();
@@ -119,15 +195,38 @@ public class HomeActivity extends AppCompatActivity {
 
         switch (itemId) {
 
-            case R.id.action_settings:
-                btnName = "Settings";
+
+            case R.id.action_done:
+
+                ((TaskAdapter) mAdapter).clearAll();
+                ((TaskAdapter) mAdapter).setTasks(getDataSetDone());
+
+
+                break;
+            case R.id.action_todo:
+
+                ((TaskAdapter) mAdapter).clearAll();
+                ((TaskAdapter) mAdapter).setTasks(getDataSetNotDone());
+
+
+                break;
+            case R.id.action_today:
+                ((TaskAdapter) mAdapter).clearAll();
+                ((TaskAdapter) mAdapter).setTasks(getDataSetToday());
+
+
+                break;
+            case R.id.action_all:
+
+                ((TaskAdapter) mAdapter).clearAll();
+                ((TaskAdapter) mAdapter).setTasks(getDataSet());
+
                 break;
 
-
         }
-        Toast.makeText(HomeActivity.this, "Button ==" + btnName, Toast.LENGTH_SHORT).show();
         return true;
     }
+
 
     public void addTask(View view) {
         if (!newTaskEditText.isFocusable())
@@ -145,13 +244,13 @@ public class HomeActivity extends AppCompatActivity {
             task.setDone(false);
 
 
-                task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
+            task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
 
-                ((TaskAdapter) mAdapter).addTask(task);
-                newTaskEditText.setText("");
-                newTaskEditText.clearFocus();
-                Toast.makeText(HomeActivity.this, "Task added", Toast.LENGTH_SHORT).show();
-                mRecyclerView.setVisibility(View.VISIBLE);
+            ((TaskAdapter) mAdapter).addTask(task);
+            newTaskEditText.setText("");
+            newTaskEditText.clearFocus();
+            Toast.makeText(HomeActivity.this, "Task added", Toast.LENGTH_SHORT).show();
+            mRecyclerView.setVisibility(View.VISIBLE);
 
 
         }

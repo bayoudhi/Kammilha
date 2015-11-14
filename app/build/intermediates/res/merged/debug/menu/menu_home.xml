@@ -3,5 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".HomeActivity">
 
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="101" app:showAsAction="never" />
+        android:orderInCategory="105" app:showAsAction="never" />
+    <item android:id="@+id/action_today" android:title="Today"
+        android:orderInCategory="103" app:showAsAction="always" />
+    <item android:id="@+id/action_done" android:title="Done"
+        android:orderInCategory="104" app:showAsAction="always" />
+    <item android:id="@+id/action_all" android:title="All"
+        android:orderInCategory="100" app:showAsAction="always" />
+    <item android:id="@+id/action_todo" android:title="TODO"
+        android:orderInCategory="102" app:showAsAction="always" />
 </menu><!-- From: file:/C:/Users/azize/Dropbox/TODO/app/src/main/res/menu/menu_home.xml -->

@@ -8,5 +8,12 @@
         sha1="8b1e6f58788723776464fe4c14a73ab8ddf02110">
         <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\classes-6f935aea04b70759314d7399ea860a0a8db7eed1.jar" />
     </item>
+    <item
+        jar="C:\Users\azize\.gradle\caches\modules-2\files-2.1\com.parse\parse-android\1.11.0\6592129dec2caa8791d322c7e4b6b7a30e8eadae\parse-android-1.11.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6592129dec2caa8791d322c7e4b6b7a30e8eadae">
+        <dex dex="C:\Users\azize\Dropbox\TODO\app\build\intermediates\pre-dexed\debug\parse-android-1.11.0-852111cc1a8be6b3040f38e8447f4b7b80dc78af.jar" />
+    </item>
 
 </items>

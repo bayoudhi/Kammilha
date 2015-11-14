@@ -32,6 +32,8 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -79,6 +81,8 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
                 new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
 
+
+
         //set graphic items
         nameEditText = (EditText) findViewById(R.id.task_name);
         noteEditText = (EditText) findViewById(R.id.task_note);
@@ -86,14 +90,8 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         dateTimeTextView = (TextView) findViewById(R.id.date);
 
         if (task.get("date") != null) {
-
-            if (task.get("time") == null) {
-
-                dateTimeTextView.setText(task.get("date").toString());
-            }
-            if (task.get("time") != null) {
-                dateTimeTextView.setText(task.get("date").toString() + " at " + task.get("time").toString());
-            }
+            DateFormat dateFormat = new SimpleDateFormat();
+            dateTimeTextView.setText(dateFormat.format(task.getDate("date")));
         }
 
 
@@ -109,7 +107,6 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         if (task.isDone()) {
             addSubtaskButton.setEnabled(false);
         }
-
 
         nameEditText.addTextChangedListener(new TextWatcher() {
             String oldText = nameEditText.getText().toString();
@@ -129,8 +126,8 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
                 if (!s.toString().isEmpty()) {
                     {
 
-                            task.setName(s.toString());
-                            task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
+                        task.setName(s.toString());
+                        task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
 
                     }
                 }
@@ -153,8 +150,8 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
             @Override
             public void afterTextChanged(Editable s) {
 
-                    task.setNote(s.toString());
-                    task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
+                task.setNote(s.toString());
+                task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
 
             }
         });
@@ -211,28 +208,34 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+        Date date = new Date(year-1900, month , day);
+        task.put("date", date);
 
-        task.put("date", day + "/" + (month + 1) + "/" + year);
+        task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
+        dateTimeTextView.setText(day + "/" + (month + 1) + "/" + year);
 
-            task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
-            dateTimeTextView.setText(day + "/" + (month + 1) + "/" + year);
-
-            Calendar now = Calendar.getInstance();
-            TimePickerDialog dpd = TimePickerDialog.newInstance(TaskActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
-            dpd.show(getFragmentManager(), "Timepickerdialog");
-
-
+        Calendar now = Calendar.getInstance();
+        TimePickerDialog dpd = TimePickerDialog.newInstance(TaskActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
+        dpd.show(getFragmentManager(), "Timepickerdialog");
 
 
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout radialPickerLayout, int hour, int minute, int second) {
-        task.put("time", hour + ":" + minute);
+        Date date = task.getDate("date");
+
+        date.setHours(hour);
+        date.setMinutes(minute);
+        date.setSeconds(second);
+
+        task.put("date", date);
 
         task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
-        dateTimeTextView.setText(task.get("date").toString() + " at " + hour + ":" + minute);
 
+
+        DateFormat dateFormat = new SimpleDateFormat();
+        dateTimeTextView.setText(dateFormat.format(date));
 
     }
 

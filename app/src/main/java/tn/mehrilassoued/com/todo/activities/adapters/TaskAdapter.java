@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.daimajia.swipe.SwipeLayout;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class TaskAdapter extends RecyclerView
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
             importantLayout = (LinearLayout) itemView.findViewById(R.id.important_layout);
             hiLayout = (LinearLayout) itemView.findViewById(R.id.hi_layout);
-            task_date=(TextView)itemView.findViewById(R.id.task_date);
+            task_date = (TextView) itemView.findViewById(R.id.task_date);
 
             itemView.setOnClickListener(this);
         }
@@ -73,6 +75,11 @@ public class TaskAdapter extends RecyclerView
     public TaskAdapter(List<Task> tasks, Context context) {
         this.tasks = tasks;
         this.context = context;
+    }
+
+    public void clearAll() {
+        tasks.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -105,12 +112,18 @@ public class TaskAdapter extends RecyclerView
         } else
             holder.task_name.setTextColor(Color.BLACK);
 
-        if (task.get("date") != null) {
-            if (task.get("time") != null)
-                holder.task_date.setText(" at " + task.get("time").toString() + " " + task.get("date"));
-            else
-                holder.task_date.setText(" on " + task.get("date"));
+        if (task.isDone()) {
+            holder.task_name.setTextColor(Color.GRAY);
         }
+
+        if (task.get("date")!=null) {
+            DateFormat dateFormat = new SimpleDateFormat();
+            holder.task_date.setText(dateFormat.format(task.getDate("date")));
+        }else{
+            holder.task_date.setText("");
+
+        }
+
         /*holder.subtaskDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -254,5 +267,13 @@ public class TaskAdapter extends RecyclerView
 
     public interface MyClickListener {
         public void onItemClick(int position, View v);
+    }
+
+    public static List<Task> getTasks() {
+        return tasks;
+    }
+
+    public static void setTasks(List<Task> tasks) {
+        TaskAdapter.tasks = tasks;
     }
 }

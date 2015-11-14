@@ -95,4 +95,11 @@ public class Task extends ParseObject {
     public void setList(List list) {
         put("parent", list);
     }*/
+
+    @Override
+    public String toString() {
+        if(getDate("date")!=null)
+        return getDate("date").toString();
+        return "null";
+    }
 }
