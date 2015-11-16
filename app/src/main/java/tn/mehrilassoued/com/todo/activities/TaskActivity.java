@@ -3,7 +3,6 @@ package tn.mehrilassoued.com.todo.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,14 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,18 +27,17 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import tn.mehrilassoued.com.todo.R;
 import tn.mehrilassoued.com.todo.activities.adapters.SubtaskAdapter;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskAdapter;
+import tn.mehrilassoued.com.todo.activities.adapters.TaskTodayAdapter;
+import tn.mehrilassoued.com.todo.activities.adapters.TaskTomorrowAdapter;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
@@ -67,7 +62,16 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         setToolBar();
 
         id = Integer.valueOf(getIntent().getStringExtra("id"));
-        task = TaskAdapter.tasks.get(id);
+        String from = getIntent().getStringExtra("from");
+        switch (from) {
+            case "tomorrow":
+                task = TaskTomorrowAdapter.tasksss.get(id);
+                break;
+            default:
+                task = TaskTodayAdapter.taskss.get(id);
+                break;
+        }
+
 
         //set up the recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.subtasks_recycler_view);
@@ -80,7 +84,6 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
-
 
 
         //set graphic items
@@ -208,7 +211,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        Date date = new Date(year-1900, month , day);
+        Date date = new Date(year - 1900, month, day);
         task.put("date", date);
 
         task.pinInBackground(StarterApplication.TODO_GROUP_NAME);

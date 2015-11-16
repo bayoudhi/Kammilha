@@ -65,13 +65,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:tag="Hover"
-                android:textSize="24sp" />
+                android:textSize="14sp" />
             <TextView
                 android:id="@+id/task_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:tag="Hover"
-                android:textSize="12sp"
+                android:textSize="8sp"
+                android:textColor="@color/md_material_blue_800"
                 />
         </LinearLayout>
     </com.daimajia.swipe.SwipeLayout>

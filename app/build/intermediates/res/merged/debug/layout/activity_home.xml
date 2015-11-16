@@ -8,67 +8,129 @@
     android:focusableInTouchMode="true"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_password"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/include">
+        android:layout_height="fill_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <EditText
-                android:id="@+id/new_task_name"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="12dp"
-                android:layout_weight="10"
-                android:hint="I want to"
-                android:singleLine="true"
-                android:textSize="20dp" />
-
-        </LinearLayout>
-
-    </android.support.design.widget.TextInputLayout>
-
-
-
-        <android.support.v7.widget.RecyclerView
-
-            android:id="@+id/my_recycler_view"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/input_layout_password"
-            android:scrollbars="vertical">
+
+            >
+
+            <include
+                android:id="@+id/include"
+                layout="@layout/toolbar" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/include">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <EditText
+                        android:id="@+id/new_task_name"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_weight="10"
+                        android:hint="I want to"
+                        android:singleLine="true"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+            </android.support.design.widget.TextInputLayout>
 
 
-        </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:id="@+id/today_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/input_layout_password"
 
+                android:layout_marginLeft="10dp"
+                android:text="Today"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#303F9F" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/today_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/today_textview"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+
+            <TextView
+                android:id="@+id/tomorrow_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/today_recycler_view"
+                android:layout_marginLeft="10dp"
+                android:text="Next days"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#303F9F" />
+
+            <android.support.v7.widget.RecyclerView
+
+                android:id="@+id/tomorrow_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tomorrow_textview"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/today_date_text_view"
+                android:layout_alignBottom="@+id/today_textview"
+                android:layout_toRightOf="@+id/today_textview"
+                android:layout_toEndOf="@+id/today_textview"
+                android:textColor="@color/accent"
+                />
+
+
+        </RelativeLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_task_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
 
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_gravity="right"
         android:layout_marginBottom="12dp"
         android:layout_marginRight="12dp"
         android:layout_weight="0"
         android:onClick="addTask"
         android:src="@drawable/ic_add" />
-
 
 </RelativeLayout><!-- From: file:/C:/Users/azize/Dropbox/TODO/app/src/main/res/layout/activity_home.xml -->
