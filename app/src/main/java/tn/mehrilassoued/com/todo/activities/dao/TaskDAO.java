@@ -1,5 +1,8 @@
 package tn.mehrilassoued.com.todo.activities.dao;
 
+import android.widget.Toast;
+
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -34,8 +37,7 @@ public abstract class TaskDAO {
 
 
     public static List<Task> getDataSetToday() {
-        List results2 = new ArrayList<Task>();
-        List results1 = new ArrayList<Task>();
+
         List results = new ArrayList<Task>();
 
         Date nextDay = new Date();
@@ -45,37 +47,27 @@ public abstract class TaskDAO {
         c.add(Calendar.DATE, 2);
         nextDay = c.getTime();
 
-        Date currentDay = new Date();
+        /*Date currentDay = new Date();
         c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
-        currentDay.setTime(c.getTimeInMillis());
+        currentDay.setTime(c.getTimeInMillis());*/
 
 
         ParseQuery<Task> query1 = Task.getQuery();
-
 
         query1.whereLessThan("date", nextDay);
         query1.orderByAscending("date");
         query1.fromLocalDatastore();
 
-        ParseQuery<Task> query2 = Task.getQuery();
-        query2.whereDoesNotExist("date");
-        query2.fromLocalDatastore();
-
-        List<ParseQuery<Task>> queries = new ArrayList<ParseQuery<Task>>();
-        queries.add(query1);
-        queries.add(query2);
 
         try {
-            results1 = query1.find();
-            results2 = query2.find();
-            results.addAll(results2);
-            results.addAll(results1);
+            results=query1.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
 
         return results;
     }
@@ -143,6 +135,26 @@ public abstract class TaskDAO {
         query.orderByAscending("date");
         query.whereEqualTo("done", false);
         query.whereNotEqualTo("date", null);
+        query.fromLocalDatastore();
+        try {
+            results = query.find();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    public static List<Task> getDataSetImportant() {
+        List results = new ArrayList<Task>();
+
+
+        ParseQuery<Task> query = Task.getQuery();
+
+
+        query.whereEqualTo("important", true);
+
         query.fromLocalDatastore();
         try {
             results = query.find();

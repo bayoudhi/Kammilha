@@ -84,7 +84,7 @@ public class TaskTodayAdapter extends RecyclerView
 
     @Override
     public DataObjectHolderToday onCreateViewHolder(ViewGroup parent,
-                                               int viewType) {
+                                                    int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tasks_row, parent, false);
 
@@ -116,30 +116,29 @@ public class TaskTodayAdapter extends RecyclerView
             holder.task_name.setTextColor(Color.GRAY);
         }
 
-        if (task.get("date")!=null) {
-            DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            holder.task_date.setText("at "+dateFormat.format(task.getDate("date")));
-        }else{
+        if (task.get("date") != null) {
+            DateFormat dateFormat = new SimpleDateFormat(" yyyy/MM/dd HH:mm");
+            holder.task_date.setText("on " + dateFormat.format(task.getDate("date")));
+        } else {
             holder.task_date.setVisibility(View.GONE);
-
         }
 
         /*holder.subtaskDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    holder.subtaskName.setPaintFlags(holder.subtaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     try {
-                        Task task = subtasks.get(position);
+                        Task task = lists.get(position);
                         task.setDone(true);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    holder.subtaskName.setPaintFlags(holder.subtaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    holder.listName.setPaintFlags(holder.listName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     try {
-                        Task task = subtasks.get(position);
+                        Task task = lists.get(position);
                         task.setDone(false);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {
@@ -245,7 +244,7 @@ public class TaskTodayAdapter extends RecyclerView
 
     public void addTask(Task dataObj) {
         taskss.add(dataObj);
-       notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
 

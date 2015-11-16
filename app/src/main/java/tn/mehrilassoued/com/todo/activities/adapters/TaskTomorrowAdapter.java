@@ -127,18 +127,18 @@ public class TaskTomorrowAdapter extends RecyclerView
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    holder.subtaskName.setPaintFlags(holder.subtaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     try {
-                        Task task = subtasks.get(position);
+                        Task task = lists.get(position);
                         task.setDone(true);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    holder.subtaskName.setPaintFlags(holder.subtaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    holder.listName.setPaintFlags(holder.listName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     try {
-                        Task task = subtasks.get(position);
+                        Task task = lists.get(position);
                         task.setDone(false);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {

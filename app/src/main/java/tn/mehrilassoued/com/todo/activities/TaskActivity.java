@@ -36,6 +36,7 @@ import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
 import tn.mehrilassoued.com.todo.activities.adapters.SubtaskAdapter;
+import tn.mehrilassoued.com.todo.activities.adapters.TaskAllAdapter;
 import tn.mehrilassoued.com.todo.activities.adapters.TaskTodayAdapter;
 import tn.mehrilassoued.com.todo.activities.adapters.TaskTomorrowAdapter;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
@@ -67,8 +68,14 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
             case "tomorrow":
                 task = TaskTomorrowAdapter.tasksss.get(id);
                 break;
-            default:
+            case "all":
+                task = TaskAllAdapter.tasks.get(id);
+                break;
+            case "today":
                 task = TaskTodayAdapter.taskss.get(id);
+                break;
+            default:
+
                 break;
         }
 
