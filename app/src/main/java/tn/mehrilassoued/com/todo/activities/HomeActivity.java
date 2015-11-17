@@ -32,9 +32,10 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager todayLayoutManager;
 
 
-    private static String LOG_TAG = "RecyclerViewActivity";
+    private static String LOG_TAG = "HomeActivity";
     private FloatingActionButton addButton;
     private EditText newTaskEditText;
+
     private static String show;
 
     @Override
@@ -75,6 +76,8 @@ public class HomeActivity extends AppCompatActivity {
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 todayRecyclerView.addItemDecoration(itemDecoration);
+                newTaskEditText.setVisibility(View.VISIBLE);
+                addButton.setVisibility(View.VISIBLE);
             }
 
             if (show.equals("today")) {
@@ -86,6 +89,8 @@ public class HomeActivity extends AppCompatActivity {
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 todayRecyclerView.addItemDecoration(itemDecoration);
+                newTaskEditText.setVisibility(View.GONE);
+                addButton.setVisibility(View.GONE);
             }
 
             if (show.equals("next")) {
@@ -97,6 +102,8 @@ public class HomeActivity extends AppCompatActivity {
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 todayRecyclerView.addItemDecoration(itemDecoration);
+                newTaskEditText.setVisibility(View.GONE);
+                addButton.setVisibility(View.GONE);
             }
             if (show.equals("important")) {
                 tasks = TaskDAO.getDataSetImportant();
@@ -107,6 +114,8 @@ public class HomeActivity extends AppCompatActivity {
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 todayRecyclerView.addItemDecoration(itemDecoration);
+                newTaskEditText.setVisibility(View.GONE);
+                addButton.setVisibility(View.GONE);
             }
 
             if (show.equals("history")) {
@@ -118,11 +127,12 @@ public class HomeActivity extends AppCompatActivity {
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 todayRecyclerView.addItemDecoration(itemDecoration);
+                newTaskEditText.setVisibility(View.GONE);
+                addButton.setVisibility(View.GONE);
             }
         }
 
-        System.out.println("TASKS===>" + tasks.toString());
-        tasks = TaskDAO.getDataSetToday();
+
 
 
     }
@@ -189,7 +199,7 @@ public class HomeActivity extends AppCompatActivity {
 
             task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
 
-            ((TaskTomorrowAdapter) todayAdapter).addTask(task);
+            ((TaskAllAdapter) todayAdapter).addTask(task);
             newTaskEditText.setText("");
             newTaskEditText.clearFocus();
             Toast.makeText(HomeActivity.this, "Task added", Toast.LENGTH_SHORT).show();

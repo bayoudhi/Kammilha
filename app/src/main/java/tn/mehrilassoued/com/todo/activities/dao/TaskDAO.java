@@ -44,7 +44,10 @@ public abstract class TaskDAO {
         nextDay.setTime(System.currentTimeMillis());
         Calendar c = Calendar.getInstance();
         c.setTime(nextDay);
-        c.add(Calendar.DATE, 2);
+        c.add(Calendar.DATE, 1);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
         nextDay = c.getTime();
 
         /*Date currentDay = new Date();
@@ -122,7 +125,7 @@ public abstract class TaskDAO {
         nextDay.setTime(System.currentTimeMillis());
         Calendar c = Calendar.getInstance();
         c.setTime(nextDay);
-        c.add(Calendar.DATE, 2);
+        c.add(Calendar.DATE, 1);
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);

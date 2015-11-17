@@ -63,7 +63,8 @@
                 android:layout_marginLeft="10dp"
                 android:text="Today"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#303F9F" />
+                android:textColor="#303F9F"
+                android:visibility="gone" />
 
 
             <android.support.v7.widget.RecyclerView
