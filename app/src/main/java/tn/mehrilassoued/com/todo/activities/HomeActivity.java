@@ -1,6 +1,7 @@
 package tn.mehrilassoued.com.todo.activities;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,9 +28,9 @@ import tn.mehrilassoued.com.todo.activities.models.Task;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private RecyclerView todayRecyclerView;
-    private RecyclerView.Adapter todayAdapter;
-    private RecyclerView.LayoutManager todayLayoutManager;
+    private RecyclerView RecyclerView;
+    private RecyclerView.Adapter Adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
 
     private static String LOG_TAG = "HomeActivity";
@@ -49,14 +50,14 @@ public class HomeActivity extends AppCompatActivity {
         newTaskEditText = (EditText) findViewById(R.id.new_task_name);
 
 
-        todayLayoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
 
 
-        todayRecyclerView = (RecyclerView) findViewById(R.id.today_recycler_view);
-        todayRecyclerView.setHasFixedSize(true);
+        RecyclerView = (RecyclerView) findViewById(R.id.today_recycler_view);
+        RecyclerView.setHasFixedSize(true);
 
 
-        todayRecyclerView.setLayoutManager(todayLayoutManager);
+        RecyclerView.setLayoutManager(layoutManager);
 
         List<Task> tasks = new ArrayList<>();
         String type = getIntent().getStringExtra("show");
@@ -68,14 +69,14 @@ public class HomeActivity extends AppCompatActivity {
         if (show != null) {
             if (show.equals("all")) {
                 tasks = TaskDAO.getTasks();
-                todayAdapter = new TaskAllAdapter(tasks, this);
-                todayRecyclerView.setAdapter(todayAdapter);
-                todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
+                Adapter = new TaskAllAdapter(tasks, this);
+                RecyclerView.setAdapter(Adapter);
+                RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-                todayRecyclerView.addItemDecoration(itemDecoration);
+                RecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.VISIBLE);
                 addButton.setVisibility(View.VISIBLE);
                 setTitle("INOBX");
@@ -83,13 +84,13 @@ public class HomeActivity extends AppCompatActivity {
 
             if (show.equals("today")) {
                 tasks = TaskDAO.getTasksToday();
-                todayAdapter = new TaskTodayAdapter(tasks, this);
-                todayRecyclerView.setAdapter(todayAdapter);
-                todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
+                Adapter = new TaskTodayAdapter(tasks, this);
+                RecyclerView.setAdapter(Adapter);
+                RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-                todayRecyclerView.addItemDecoration(itemDecoration);
+                RecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
                 setTitle("TODAY");
@@ -97,26 +98,26 @@ public class HomeActivity extends AppCompatActivity {
 
             if (show.equals("next")) {
                 tasks = TaskDAO.getTasksNextDays();
-                todayAdapter = new TaskTomorrowAdapter(tasks, this);
-                todayRecyclerView.setAdapter(todayAdapter);
-                todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
+                Adapter = new TaskTomorrowAdapter(tasks, this);
+                RecyclerView.setAdapter(Adapter);
+                RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-                todayRecyclerView.addItemDecoration(itemDecoration);
+                RecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
                 setTitle("TOMORROW");
             }
             if (show.equals("important")) {
                 tasks = TaskDAO.getTasksImportant();
-                todayAdapter = new TaskTomorrowAdapter(tasks, this);
-                todayRecyclerView.setAdapter(todayAdapter);
-                todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
+                Adapter = new TaskTomorrowAdapter(tasks, this);
+                RecyclerView.setAdapter(Adapter);
+                RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-                todayRecyclerView.addItemDecoration(itemDecoration);
+                RecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
                 setTitle("IMPORTANT");
@@ -124,20 +125,18 @@ public class HomeActivity extends AppCompatActivity {
 
             if (show.equals("history")) {
                 tasks = TaskDAO.getTasksDone();
-                todayAdapter = new TaskTomorrowAdapter(tasks, this);
-                todayRecyclerView.setAdapter(todayAdapter);
-                todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
+                Adapter = new TaskTomorrowAdapter(tasks, this);
+                RecyclerView.setAdapter(Adapter);
+                RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-                todayRecyclerView.addItemDecoration(itemDecoration);
+                RecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
                 setTitle("HISTORY");
             }
         }
-
-
 
 
     }
@@ -146,7 +145,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        /*((TaskTodayAdapter) todayAdapter).setOnItemClickListener(new TaskTodayAdapter.MyClickListener() {
+        /*((TaskTodayAdapter) Adapter).setOnItemClickListener(new TaskTodayAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
@@ -154,7 +153,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 */
-
+        Adapter.notifyDataSetChanged();
     }
 
 
@@ -204,12 +203,14 @@ public class HomeActivity extends AppCompatActivity {
 
             task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
 
-            ((TaskAllAdapter) todayAdapter).addTask(task);
+            ((TaskAllAdapter) Adapter).addTask(task);
             newTaskEditText.setText("");
             newTaskEditText.clearFocus();
             Toast.makeText(HomeActivity.this, "Task added", Toast.LENGTH_SHORT).show();
-            todayRecyclerView.getLayoutParams().height = todayRecyclerView.getLayoutParams().height + 110;
+            RecyclerView.getLayoutParams().height = RecyclerView.getLayoutParams().height + 110;
 
+            
+            ListActivity.check = true;
         }
     }
 }

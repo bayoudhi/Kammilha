@@ -246,7 +246,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
         DateFormat dateFormat = new SimpleDateFormat();
         dateTimeTextView.setText(dateFormat.format(date));
-
+        ListActivity.check=true;
     }
 
 
@@ -284,7 +284,6 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
-                            Toast.makeText(TaskActivity.this, "Task deleted", Toast.LENGTH_SHORT).show();
                         }
                     }).
                     show();
@@ -325,7 +324,6 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
                         subtask.add("parent", task);
                         subtask.pinInBackground(StarterApplication.TODO_GROUP_NAME);
                         ((SubtaskAdapter) mAdapter).addTask(subtask);
-                        Toast.makeText(getApplicationContext(), "Subtask added", Toast.LENGTH_SHORT).show();
                         mRecyclerView.setVisibility(View.VISIBLE);
 
                     }

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
+import tn.mehrilassoued.com.todo.activities.ListActivity;
 import tn.mehrilassoued.com.todo.activities.StarterApplication;
 import tn.mehrilassoued.com.todo.activities.TaskActivity;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
@@ -153,7 +154,7 @@ public class TaskTodayAdapter extends RecyclerView
             public void onClick(View v) {
 
                 setTaskImportant(position);
-
+                ListActivity.check=true;
             }
         });
 
@@ -162,6 +163,7 @@ public class TaskTodayAdapter extends RecyclerView
             public void onClick(View v) {
                 setTaskDone(position);
                 setAllSubtasksDone(position);
+                ListActivity.check=true;
             }
         });
 

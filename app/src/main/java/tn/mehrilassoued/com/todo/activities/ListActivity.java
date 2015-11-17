@@ -21,6 +21,8 @@ import tn.mehrilassoued.com.todo.activities.models.Task;
 
 public class ListActivity extends AppCompatActivity {
 
+    public static boolean check = false;
+
     private RecyclerView todayRecyclerView;
     private RecyclerView.Adapter todayAdapter;
     private RecyclerView.LayoutManager todayLayoutManager;
@@ -40,12 +42,6 @@ public class ListActivity extends AppCompatActivity {
         todayRecyclerView.setLayoutManager(todayLayoutManager);
 
 
-
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
         List<String> tasks = new ArrayList<>();
         tasks.add("Inbox");
         tasks.add("Today");
@@ -58,5 +54,14 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         todayRecyclerView.addItemDecoration(itemDecoration);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if (check) {
+            todayAdapter.notifyDataSetChanged();
+            check=false;
+        }
     }
 }

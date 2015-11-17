@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
+import tn.mehrilassoued.com.todo.activities.ListActivity;
 import tn.mehrilassoued.com.todo.activities.StarterApplication;
 import tn.mehrilassoued.com.todo.activities.TaskActivity;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
@@ -31,7 +32,7 @@ public class TaskAllAdapter extends RecyclerView
         .Adapter<TaskAllAdapter
         .DataObjectHolder> {
     private static String LOG_TAG = "TaskAllAdapter";
-    public static List<Task> tasks;
+    public  static List<Task> tasks;
     private Context context;
     private static MyClickListener myClickListener;
 
@@ -75,6 +76,7 @@ public class TaskAllAdapter extends RecyclerView
         this.tasks = tasks;
         this.context = context;
     }
+
 
     public void clearAll() {
         tasks.clear();
@@ -153,7 +155,7 @@ public class TaskAllAdapter extends RecyclerView
             public void onClick(View v) {
 
                 setTaskImportant(position);
-
+                ListActivity.check=true;
             }
         });
 
@@ -162,6 +164,7 @@ public class TaskAllAdapter extends RecyclerView
             public void onClick(View v) {
                 setTaskDone(position);
                 setAllSubtasksDone(position);
+                ListActivity.check=true;
             }
         });
 
@@ -268,11 +271,9 @@ public class TaskAllAdapter extends RecyclerView
         public void onItemClick(int position, View v);
     }
 
-    public static List<Task> getTasks() {
+    public  List<Task> getTasks() {
         return tasks;
     }
 
-    public static void setTasks(List<Task> tasks) {
-        TaskAllAdapter.tasks = tasks;
-    }
+
 }

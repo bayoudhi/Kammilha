@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.CountCallback;
 import com.parse.ParseException;
@@ -25,6 +26,7 @@ import tn.mehrilassoued.com.todo.activities.models.Task;
 public class ListAdapter extends RecyclerView
         .Adapter<ListAdapter
         .DataObjectHolder> {
+    public static boolean check = true;
     private static String LOG_TAG = "ListAdapter";
     public static List<String> lists;
     private Context context;
@@ -74,82 +76,84 @@ public class ListAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(final DataObjectHolder holder, final int position) {
-        holder.listName.setText(lists.get(position));
+        if (check) {
+
+            holder.listName.setText(lists.get(position));
 
 
-
-        int todayNumber = TaskDAO.getTasksTodayCount();
-        int allNumber = TaskDAO.getTasksCount();
-
-
-        int nextNumber = TaskDAO.getTasksNextDaysCount();
-
-        int doneNumber = TaskDAO.getTasksDoneCount();
-        int importantNumber = TaskDAO.getTasksImportantCount();
-
-        switch (lists.get(position)) {
-            case "Inbox":
-                holder.listNumber.setText(String.valueOf(allNumber));
-                break;
-            case "Today":
-                holder.listNumber.setText(String.valueOf(todayNumber));
-                break;
-            case "Tomorrow":
-                holder.listNumber.setText(String.valueOf(nextNumber));
-                break;
-            case "Important":
-                holder.listNumber.setText(String.valueOf(importantNumber));
-                holder.listName.setTextColor(Color.RED);
-                break;
-            case "History":
-                holder.listNumber.setText(String.valueOf(doneNumber));
-                holder.listName.setTextColor(Color.GRAY);
-                holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                break;
-
-        }
+            int todayNumber = TaskDAO.getTasksTodayCount();
+            int allNumber = TaskDAO.getTasksCount();
 
 
-        holder.listName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                if (v != null)
+            int nextNumber = TaskDAO.getTasksNextDaysCount();
+
+            int doneNumber = TaskDAO.getTasksDoneCount();
+            int importantNumber = TaskDAO.getTasksImportantCount();
+
+            switch (lists.get(position)) {
+                case "Inbox":
+                    holder.listNumber.setText(String.valueOf(allNumber));
+                    break;
+                case "Today":
+                    holder.listNumber.setText(String.valueOf(todayNumber));
+                    break;
+                case "Tomorrow":
+                    holder.listNumber.setText(String.valueOf(nextNumber));
+                    break;
+                case "Important":
+                    holder.listNumber.setText(String.valueOf(importantNumber));
+                    holder.listName.setTextColor(Color.RED);
+                    break;
+                case "History":
+                    holder.listNumber.setText(String.valueOf(doneNumber));
+                    holder.listName.setTextColor(Color.GRAY);
+                    holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    break;
+
+            }
+
+
+            holder.listName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent;
+                    if (v != null)
                /* Snackbar.make(v,String.valueOf(v.getId()), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-                    switch (lists.get(position)) {
-                        case "Inbox":
-                            intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show", "all");
-                            context.startActivity(intent);
-                            break;
-                        case "Today":
-                            intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show", "today");
-                            context.startActivity(intent);
-                            break;
-                        case "Tomorrow":
-                            intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show", "next");
-                            context.startActivity(intent);
-                            break;
-                        case "Important":
-                            intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show", "important");
-                            context.startActivity(intent);
-                            break;
-                        case "History":
-                            intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show", "history");
-                            context.startActivity(intent);
-                            break;
-                        default:
-                            break;
-                    }
+                        switch (lists.get(position)) {
+                            case "Inbox":
+                                intent = new Intent(context, HomeActivity.class);
+                                intent.putExtra("show", "all");
+                                context.startActivity(intent);
+                                break;
+                            case "Today":
+                                intent = new Intent(context, HomeActivity.class);
+                                intent.putExtra("show", "today");
+                                context.startActivity(intent);
+                                break;
+                            case "Tomorrow":
+                                intent = new Intent(context, HomeActivity.class);
+                                intent.putExtra("show", "next");
+                                context.startActivity(intent);
+                                break;
+                            case "Important":
+                                intent = new Intent(context, HomeActivity.class);
+                                intent.putExtra("show", "important");
+                                context.startActivity(intent);
+                                break;
+                            case "History":
+                                intent = new Intent(context, HomeActivity.class);
+                                intent.putExtra("show", "history");
+                                context.startActivity(intent);
+                                break;
+                            default:
+                                break;
+                        }
 
-            }
-        });
+                }
+            });
+        }
 
     }
 

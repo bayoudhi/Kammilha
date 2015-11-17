@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
+import tn.mehrilassoued.com.todo.activities.ListActivity;
 import tn.mehrilassoued.com.todo.activities.StarterApplication;
 import tn.mehrilassoued.com.todo.activities.TaskActivity;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
@@ -83,7 +84,7 @@ public class TaskTomorrowAdapter extends RecyclerView
 
     @Override
     public DataObjectHolderToday onCreateViewHolder(ViewGroup parent,
-                                               int viewType) {
+                                                    int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tasks_row, parent, false);
 
@@ -115,10 +116,10 @@ public class TaskTomorrowAdapter extends RecyclerView
             holder.task_name.setTextColor(Color.GRAY);
         }
 
-        if (task.get("date")!=null) {
+        if (task.get("date") != null) {
             DateFormat dateFormat = new SimpleDateFormat();
             holder.task_date.setText(dateFormat.format(task.getDate("date")));
-        }else{
+        } else {
             holder.task_date.setText("");
 
         }
@@ -153,6 +154,7 @@ public class TaskTomorrowAdapter extends RecyclerView
             public void onClick(View v) {
 
                 setTaskImportant(position);
+                ListActivity.check = true;
 
             }
         });
@@ -162,6 +164,7 @@ public class TaskTomorrowAdapter extends RecyclerView
             public void onClick(View v) {
                 setTaskDone(position);
                 setAllSubtasksDone(position);
+                ListActivity.check = true;
             }
         });
 
@@ -174,7 +177,7 @@ public class TaskTomorrowAdapter extends RecyclerView
                 Intent intent = new Intent(context, TaskActivity.class);
 
                 intent.putExtra("id", String.valueOf(position));
-                intent.putExtra("from","tomorrow");
+                intent.putExtra("from", "tomorrow");
                 context.startActivity(intent);
             }
         });
