@@ -2,16 +2,19 @@ package tn.mehrilassoued.com.todo.activities.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.parse.CountCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
@@ -73,28 +76,40 @@ public class ListAdapter extends RecyclerView
     public void onBindViewHolder(final DataObjectHolder holder, final int position) {
         holder.listName.setText(lists.get(position));
 
-        List<Task> todayTasks = TaskDAO.getDataSetToday();
-        int todayNumber=todayTasks.size();
 
-        List<Task> allTasks = TaskDAO.getDataSet();
-        int allNumber=allTasks.size();
 
-        List<Task> nextTasks = TaskDAO.getDataSetNotDone();
-        int nextNumber=nextTasks.size();
+        int todayNumber = TaskDAO.getTasksTodayCount();
+        int allNumber = TaskDAO.getTasksCount();
 
-        int doneNumber = TaskDAO.getDataSetDone().size();
-        int importantNumber = TaskDAO.getDataSetImportant().size();
 
-        if (position == 0)
-            holder.listNumber.setText(String.valueOf(allNumber));
-        else if(position==1)
-            holder.listNumber.setText(String.valueOf(todayNumber));
-        else if(position==2)
-            holder.listNumber.setText(String.valueOf(nextNumber));
-        else if(position==3)
-            holder.listNumber.setText(String.valueOf(importantNumber));
-        else
-            holder.listNumber.setText(String.valueOf(doneNumber));
+        int nextNumber = TaskDAO.getTasksNextDaysCount();
+
+        int doneNumber = TaskDAO.getTasksDoneCount();
+        int importantNumber = TaskDAO.getTasksImportantCount();
+
+        switch (lists.get(position)) {
+            case "Inbox":
+                holder.listNumber.setText(String.valueOf(allNumber));
+                break;
+            case "Today":
+                holder.listNumber.setText(String.valueOf(todayNumber));
+                break;
+            case "Tomorrow":
+                holder.listNumber.setText(String.valueOf(nextNumber));
+                break;
+            case "Important":
+                holder.listNumber.setText(String.valueOf(importantNumber));
+                holder.listName.setTextColor(Color.RED);
+                break;
+            case "History":
+                holder.listNumber.setText(String.valueOf(doneNumber));
+                holder.listName.setTextColor(Color.GRAY);
+                holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                break;
+
+        }
+
+
         holder.listName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,37 +118,39 @@ public class ListAdapter extends RecyclerView
                /* Snackbar.make(v,String.valueOf(v.getId()), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-                    switch (position) {
-                        case 0:
-                             intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show","all");
-                            context.startActivity(intent);
-                            break;
-                        case 1:
-                             intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show","today");
-                            context.startActivity(intent);
-                            break;
-                        case 2:
+                    switch (lists.get(position)) {
+                        case "Inbox":
                             intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show","next");
+                            intent.putExtra("show", "all");
                             context.startActivity(intent);
                             break;
-                        case 3:
+                        case "Today":
                             intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show","important");
+                            intent.putExtra("show", "today");
                             context.startActivity(intent);
                             break;
-                        case 4:
+                        case "Tomorrow":
                             intent = new Intent(context, HomeActivity.class);
-                            intent.putExtra("show","history");
+                            intent.putExtra("show", "next");
+                            context.startActivity(intent);
+                            break;
+                        case "Important":
+                            intent = new Intent(context, HomeActivity.class);
+                            intent.putExtra("show", "important");
+                            context.startActivity(intent);
+                            break;
+                        case "History":
+                            intent = new Intent(context, HomeActivity.class);
+                            intent.putExtra("show", "history");
                             context.startActivity(intent);
                             break;
                         default:
                             break;
                     }
+
             }
         });
+
     }
 
 

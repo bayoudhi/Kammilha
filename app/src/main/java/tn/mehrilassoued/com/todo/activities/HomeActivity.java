@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (show != null) {
             if (show.equals("all")) {
-                tasks = TaskDAO.getDataSet();
+                tasks = TaskDAO.getTasks();
                 todayAdapter = new TaskAllAdapter(tasks, this);
                 todayRecyclerView.setAdapter(todayAdapter);
                 todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
@@ -78,10 +78,11 @@ public class HomeActivity extends AppCompatActivity {
                 todayRecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.VISIBLE);
                 addButton.setVisibility(View.VISIBLE);
+                setTitle("INOBX");
             }
 
             if (show.equals("today")) {
-                tasks = TaskDAO.getDataSetToday();
+                tasks = TaskDAO.getTasksToday();
                 todayAdapter = new TaskTodayAdapter(tasks, this);
                 todayRecyclerView.setAdapter(todayAdapter);
                 todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
@@ -91,10 +92,11 @@ public class HomeActivity extends AppCompatActivity {
                 todayRecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
+                setTitle("TODAY");
             }
 
             if (show.equals("next")) {
-                tasks = TaskDAO.getDataSetNotDone();
+                tasks = TaskDAO.getTasksNextDays();
                 todayAdapter = new TaskTomorrowAdapter(tasks, this);
                 todayRecyclerView.setAdapter(todayAdapter);
                 todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
@@ -104,9 +106,10 @@ public class HomeActivity extends AppCompatActivity {
                 todayRecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
+                setTitle("TOMORROW");
             }
             if (show.equals("important")) {
-                tasks = TaskDAO.getDataSetImportant();
+                tasks = TaskDAO.getTasksImportant();
                 todayAdapter = new TaskTomorrowAdapter(tasks, this);
                 todayRecyclerView.setAdapter(todayAdapter);
                 todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
@@ -116,10 +119,11 @@ public class HomeActivity extends AppCompatActivity {
                 todayRecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
+                setTitle("IMPORTANT");
             }
 
             if (show.equals("history")) {
-                tasks = TaskDAO.getDataSetDone();
+                tasks = TaskDAO.getTasksDone();
                 todayAdapter = new TaskTomorrowAdapter(tasks, this);
                 todayRecyclerView.setAdapter(todayAdapter);
                 todayRecyclerView.getLayoutParams().height = 130 * tasks.size();
@@ -129,6 +133,7 @@ public class HomeActivity extends AppCompatActivity {
                 todayRecyclerView.addItemDecoration(itemDecoration);
                 newTaskEditText.setVisibility(View.GONE);
                 addButton.setVisibility(View.GONE);
+                setTitle("HISTORY");
             }
         }
 
@@ -158,7 +163,7 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
         //ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(false);
     }
 
     @Override

@@ -22,4 +22,6 @@
     <string name="input_hint">Input hint</string>
     <string name="input_prefill">Input fiull</string>
     <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
