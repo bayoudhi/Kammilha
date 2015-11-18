@@ -12,10 +12,28 @@
     tools:context="tn.mehrilassoued.com.todo.activities.ListActivity"
     tools:showIn="@layout/activity_list">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical">
-    </android.support.v7.widget.RecyclerView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_recycler_view"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
 </RelativeLayout>

@@ -1,10 +1,5 @@
 package tn.mehrilassoued.com.todo.activities.dao;
 
-import android.content.Context;
-import android.widget.Toast;
-
-import com.parse.CountCallback;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -13,8 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import tn.mehrilassoued.com.todo.activities.adapters.ListAdapter;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskTodayAdapter;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
 /**

@@ -4,22 +4,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
 import tn.mehrilassoued.com.todo.activities.HomeActivity;
+import tn.mehrilassoued.com.todo.activities.ListActivity;
+import tn.mehrilassoued.com.todo.activities.StarterApplication;
 import tn.mehrilassoued.com.todo.activities.dao.TaskDAO;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
@@ -78,8 +85,6 @@ public class ListAdapter extends RecyclerView
     public void onBindViewHolder(final DataObjectHolder holder, final int position) {
         if (check) {
 
-            holder.listName.setText(lists.get(position));
-
 
             int todayNumber = TaskDAO.getTasksTodayCount();
             int allNumber = TaskDAO.getTasksCount();
@@ -92,22 +97,36 @@ public class ListAdapter extends RecyclerView
 
             switch (lists.get(position)) {
                 case "Inbox":
+                    holder.listName.setText(lists.get(position));
                     holder.listNumber.setText(String.valueOf(allNumber));
                     break;
                 case "Today":
+                    holder.listName.setText(lists.get(position));
                     holder.listNumber.setText(String.valueOf(todayNumber));
                     break;
-                case "Tomorrow":
+                case "In 7 Days":
+                    holder.listName.setText(lists.get(position));
                     holder.listNumber.setText(String.valueOf(nextNumber));
                     break;
-                case "Important":
+                case "Importantt":
+
+                    holder.listName.setText(lists.get(position));
                     holder.listNumber.setText(String.valueOf(importantNumber));
                     holder.listName.setTextColor(Color.RED);
+
                     break;
                 case "History":
                     holder.listNumber.setText(String.valueOf(doneNumber));
                     holder.listName.setTextColor(Color.GRAY);
                     holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    break;
+                case "Create list":
+                    holder.listName.setText(lists.get(position));
+                    holder.listName.setTextColor(Color.BLUE);
+                    break;
+                default:
+                    holder.listName.setText(lists.get(position));
+                    //holder.listNumber.setText(String.valueOf(allNumber));
                     break;
 
             }
@@ -132,7 +151,7 @@ public class ListAdapter extends RecyclerView
                                 intent.putExtra("show", "today");
                                 context.startActivity(intent);
                                 break;
-                            case "Tomorrow":
+                            case "In 7 Days":
                                 intent = new Intent(context, HomeActivity.class);
                                 intent.putExtra("show", "next");
                                 context.startActivity(intent);
@@ -146,6 +165,32 @@ public class ListAdapter extends RecyclerView
                                 intent = new Intent(context, HomeActivity.class);
                                 intent.putExtra("show", "history");
                                 context.startActivity(intent);
+                                break;
+                            case "Create list":
+                                new MaterialDialog.Builder(context)
+                                        .title("Add a list")
+
+                                        .inputType(InputType.TYPE_CLASS_TEXT)
+                                        .input("", "", new MaterialDialog.InputCallback() {
+                                            @Override
+                                            public void onInput(MaterialDialog dialog, CharSequence input) {
+                                                if (input.toString().isEmpty()) return;
+
+                                                tn.mehrilassoued.com.todo.activities.models.List list=new tn.mehrilassoued.com.todo.activities.models.List();
+                                                list.setName(input.toString());
+                                                list.setDraft(true);
+
+                                                list.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
+                                                    @Override
+                                                    public void done(ParseException e) {
+                                                        ListActivity.check=true;
+                                                    }
+                                                });
+
+
+                                            }
+                                        }).positiveText("Add").negativeText("Cancel").
+                                        show();
                                 break;
                             default:
                                 break;

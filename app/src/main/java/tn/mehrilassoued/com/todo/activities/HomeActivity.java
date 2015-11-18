@@ -1,28 +1,26 @@
 package tn.mehrilassoued.com.todo.activities;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskAllAdapter;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskTodayAdapter;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskTomorrowAdapter;
+import tn.mehrilassoued.com.todo.activities.adapters.TaskAdapter;
 import tn.mehrilassoued.com.todo.activities.dao.TaskDAO;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
@@ -34,20 +32,17 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private static String LOG_TAG = "HomeActivity";
-    private FloatingActionButton addButton;
-    private EditText newTaskEditText;
 
-    private static String show;
+    private List<Task> tasks;
+    private String type = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setToolBar();
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         //set graphic items
-        addButton = (FloatingActionButton) findViewById(R.id.add_task_button);
-        newTaskEditText = (EditText) findViewById(R.id.new_task_name);
 
 
         layoutManager = new LinearLayoutManager(this);
@@ -60,16 +55,15 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView.setLayoutManager(layoutManager);
 
         List<Task> tasks = new ArrayList<>();
-        String type = getIntent().getStringExtra("show");
-        if (type != null)
-            show = type;
+        this.type = getIntent().getStringExtra("show");
+
 
         RecyclerView.ItemDecoration itemDecoration;
 
-        if (show != null) {
-            if (show.equals("all")) {
+        if (type != null) {
+            if (type.equals("all")) {
                 tasks = TaskDAO.getTasks();
-                Adapter = new TaskAllAdapter(tasks, this);
+                Adapter = new TaskAdapter(tasks, this);
                 RecyclerView.setAdapter(Adapter);
                 RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
@@ -77,63 +71,53 @@ public class HomeActivity extends AppCompatActivity {
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 RecyclerView.addItemDecoration(itemDecoration);
-                newTaskEditText.setVisibility(View.VISIBLE);
-                addButton.setVisibility(View.VISIBLE);
                 setTitle("INOBX");
             }
 
-            if (show.equals("today")) {
+            if (type.equals("today")) {
                 tasks = TaskDAO.getTasksToday();
-                Adapter = new TaskTodayAdapter(tasks, this);
+                Adapter = new TaskAdapter(tasks, this);
                 RecyclerView.setAdapter(Adapter);
                 RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 RecyclerView.addItemDecoration(itemDecoration);
-                newTaskEditText.setVisibility(View.GONE);
-                addButton.setVisibility(View.GONE);
                 setTitle("TODAY");
             }
 
-            if (show.equals("next")) {
+            if (type.equals("next")) {
                 tasks = TaskDAO.getTasksNextDays();
-                Adapter = new TaskTomorrowAdapter(tasks, this);
+                Adapter = new TaskAdapter(tasks, this);
                 RecyclerView.setAdapter(Adapter);
                 RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 RecyclerView.addItemDecoration(itemDecoration);
-                newTaskEditText.setVisibility(View.GONE);
-                addButton.setVisibility(View.GONE);
-                setTitle("TOMORROW");
+                setTitle("In 7 Days");
             }
-            if (show.equals("important")) {
+            if (type.equals("important")) {
                 tasks = TaskDAO.getTasksImportant();
-                Adapter = new TaskTomorrowAdapter(tasks, this);
+                Adapter = new TaskAdapter(tasks, this);
                 RecyclerView.setAdapter(Adapter);
                 RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 RecyclerView.addItemDecoration(itemDecoration);
-                newTaskEditText.setVisibility(View.GONE);
-                addButton.setVisibility(View.GONE);
                 setTitle("IMPORTANT");
             }
 
-            if (show.equals("history")) {
+            if (type.equals("history")) {
                 tasks = TaskDAO.getTasksDone();
-                Adapter = new TaskTomorrowAdapter(tasks, this);
+                Adapter = new TaskAdapter(tasks, this);
                 RecyclerView.setAdapter(Adapter);
                 RecyclerView.getLayoutParams().height = 130 * tasks.size();
 
                 itemDecoration =
                         new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                 RecyclerView.addItemDecoration(itemDecoration);
-                newTaskEditText.setVisibility(View.GONE);
-                addButton.setVisibility(View.GONE);
                 setTitle("HISTORY");
             }
         }
@@ -149,21 +133,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
-                Toast.makeText(HomeActivity.this, " Clicked on Item " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, " Clicked on Item " + position, Toast.LENGTH_SHORT).type();
             }
         });
 */
-        Adapter.notifyDataSetChanged();
+        if (Adapter != null) Adapter.notifyDataSetChanged();
     }
 
-
-    private void setToolBar() {
-        Toolbar tb = (Toolbar) findViewById(R.id.include);
-        setSupportActionBar(tb);
-        ActionBar ab = getSupportActionBar();
-        //ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-        ab.setDisplayHomeAsUpEnabled(false);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -185,32 +161,41 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public void addTask(View view) {
-        if (!newTaskEditText.isFocusable())
-            newTaskEditText.requestFocus();
+    public void addTask(final View view) {
+        new MaterialDialog.Builder(this)
+                .title("Add a task")
 
-        if (!newTaskEditText.getText().toString().isEmpty()) {
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input("", "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        if (input.toString().isEmpty()) return;
+
+                        Task task = new Task();
+                        task.setAuthor(ParseUser.getCurrentUser());
+                        task.setUuidString();
+                        task.setName(input.toString());
+                        task.setDraft(true);
+                        task.setImportant(false);
+                        task.setDone(false);
 
 
-            Task task = new Task();
-            task.setAuthor(ParseUser.getCurrentUser());
-            task.setUuidString();
-            task.setName(newTaskEditText.getText().toString());
-            task.setDraft(true);
-            task.setImportant(false);
-            task.setDone(false);
+                        final Task t = task;
+                        task.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                ((TaskAdapter) Adapter).addTask(t, 0);
+                                ListActivity.check = true;
+                                final View v = view;
+                                Snackbar.make(v, "Task added", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
+                        });
 
 
-            task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
-
-            ((TaskAllAdapter) Adapter).addTask(task);
-            newTaskEditText.setText("");
-            newTaskEditText.clearFocus();
-            Toast.makeText(HomeActivity.this, "Task added", Toast.LENGTH_SHORT).show();
-            RecyclerView.getLayoutParams().height = RecyclerView.getLayoutParams().height + 110;
-
-            
-            ListActivity.check = true;
-        }
+                    }
+                }).positiveText("Add").negativeText("Cancel").
+                show();
     }
 }

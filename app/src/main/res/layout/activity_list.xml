@@ -8,7 +8,6 @@
     tools:context="tn.mehrilassoued.com.todo.activities.ListActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbarr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -24,7 +23,13 @@
 
     <include layout="@layout/content_list" />
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_task_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add" android:onClick="addTask" />
 
 
 </android.support.design.widget.CoordinatorLayout>

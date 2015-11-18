@@ -2,6 +2,7 @@ package tn.mehrilassoued.com.todo.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -36,9 +36,7 @@ import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
 import tn.mehrilassoued.com.todo.activities.adapters.SubtaskAdapter;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskAllAdapter;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskTodayAdapter;
-import tn.mehrilassoued.com.todo.activities.adapters.TaskTomorrowAdapter;
+import tn.mehrilassoued.com.todo.activities.adapters.TaskAdapter;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
@@ -60,24 +58,13 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-        setToolBar();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         id = Integer.valueOf(getIntent().getStringExtra("id"));
         String from = getIntent().getStringExtra("from");
-        switch (from) {
-            case "tomorrow":
-                task = TaskTomorrowAdapter.tasksss.get(id);
-                break;
-            case "all":
-                task = TaskAllAdapter.tasks.get(id);
-                break;
-            case "today":
-                task = TaskTodayAdapter.taskss.get(id);
-                break;
-            default:
 
-                break;
-        }
+        task = TaskAdapter.tasks.get(id);
 
 
         //set up the recycler view
@@ -170,6 +157,8 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
             mRecyclerView.setVisibility(View.GONE);
         }
 
+        setTitle(task.getName());
+
     }
 
     private List<Subtask> getDataSet() {
@@ -189,13 +178,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         return results;
     }
 
-    private void setToolBar() {
-        Toolbar tb = (Toolbar) findViewById(R.id.include);
-        setSupportActionBar(tb);
-        ActionBar ab = getSupportActionBar();
-        //ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-        ab.setDisplayHomeAsUpEnabled(true);
-    }
+
 
     public void setTime(View view) {
         Calendar now = Calendar.getInstance();
@@ -246,7 +229,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
         DateFormat dateFormat = new SimpleDateFormat();
         dateTimeTextView.setText(dateFormat.format(date));
-        ListActivity.check=true;
+        ListActivity.check = true;
     }
 
 
@@ -258,7 +241,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -282,7 +265,8 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
                             }
                             task.unpinInBackground(StarterApplication.TODO_GROUP_NAME);
 
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+
+                            Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                             startActivity(intent);
                         }
                     }).
