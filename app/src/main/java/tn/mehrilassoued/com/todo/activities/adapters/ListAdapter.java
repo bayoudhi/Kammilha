@@ -87,15 +87,15 @@ public class ListAdapter extends RecyclerView
         int importantNumber = TaskDAO.getTasksImportantCount();
 
         int tasksNumber = TaskDAO.getTasksByListCount(groups.get(position));
-
+        int inboxNumber = TaskDAO.getTasksByListCount(null);
 
         switch (groups.get(position).getName()) {
-            /*case "Inbox":
-                holder.listName.setText(groups.get(position).getName());
-                holder.listNumber.setText(String.valueOf(allNumber));
-                break;*/
+            case "Inbox":
+                holder.listName.setText("Inbox");
+                holder.listNumber.setText(String.valueOf(inboxNumber));
+                break;
             case "Today":
-                holder.listName.setText(groups.get(position).getName());
+                holder.listName.setText("Today");
                 holder.listNumber.setText(String.valueOf(todayNumber));
                 break;
             case "In 7 Days":
@@ -120,58 +120,67 @@ public class ListAdapter extends RecyclerView
                 holder.listNumber.setText("");
                 break;
             default:
+
                 holder.listName.setText(groups.get(position).getName());
-                holder.listNumber.setText(String.valueOf(tasksNumber));
+                if (tasksNumber != 0)
+                    holder.listNumber.setText(String.valueOf(tasksNumber));
+                else holder.listNumber.setText("");
                 holder.listName.setTextColor(Color.BLACK);
                 break;
+
 
         }
 
 
-        holder.listName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
+        holder.listName.setOnClickListener(new View.OnClickListener()
+
+                                           {
+                                               @Override
+                                               public void onClick(View v) {
+                                                   Intent intent;
 
                /* Snackbar.make(v,String.valueOf(v.getId()), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-                switch (groups.get(position).getName()) {
-                    case "Create list":
-                        new MaterialDialog.Builder(context)
-                                .title("Add a list")
+                                                   switch (groups.get(position).getName()) {
+                                                       case "Create list":
+                                                           new MaterialDialog.Builder(context)
+                                                                   .title("Add a list")
 
-                                .inputType(InputType.TYPE_CLASS_TEXT)
-                                .input("", "", new MaterialDialog.InputCallback() {
-                                    @Override
-                                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                                        if (input.toString().isEmpty()) return;
+                                                                   .inputType(InputType.TYPE_CLASS_TEXT)
+                                                                   .input("", "", new MaterialDialog.InputCallback() {
+                                                                       @Override
+                                                                       public void onInput(MaterialDialog dialog, CharSequence input) {
+                                                                           if (input.toString().isEmpty())
+                                                                               return;
 
-                                        Group group = new Group();
-                                        group.setName(input.toString());
-                                        group.setDraft(true);
+                                                                           Group group = new Group();
+                                                                           group.setName(input.toString());
+                                                                           group.setDraft(true);
 
-                                        group.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
-                                            @Override
-                                            public void done(ParseException e) {
-                                                ((ListActivity) context).loadLists();
-                                            }
-                                        });
+                                                                           group.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
+                                                                               @Override
+                                                                               public void done(ParseException e) {
+                                                                                   ((ListActivity) context).loadLists();
+                                                                               }
+                                                                           });
 
 
-                                    }
-                                }).positiveText("Add").negativeText("Cancel").
-                                show();
-                        break;
-                    default:
-                        intent = new Intent(context, HomeActivity.class);
-                        intent.putExtra("id", position);
-                        context.startActivity(intent);
-                        break;
-                }
+                                                                       }
+                                                                   }).positiveText("Add").negativeText("Cancel").
+                                                                   show();
+                                                           break;
+                                                       default:
+                                                           intent = new Intent(context, HomeActivity.class);
+                                                           intent.putExtra("id", position);
+                                                           context.startActivity(intent);
+                                                           break;
+                                                   }
 
-            }
-        });
+                                               }
+                                           }
+
+        );
 
 
     }

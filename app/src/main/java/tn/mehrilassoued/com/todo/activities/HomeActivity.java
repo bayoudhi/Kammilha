@@ -62,15 +62,21 @@ public class HomeActivity extends AppCompatActivity {
         tasks = new ArrayList<>();
         int position = getIntent().getIntExtra("id", -1);
         if (position != -1) {
-            group = ListAdapter.groups.get(position);
-
+            if (position == 0) {
+                group = null;
+                setTitle("Inbox");
+            } else {
+                group = ListAdapter.groups.get(position);
+                setTitle(group.getName());
+            }
             RecyclerView.ItemDecoration itemDecoration;
 
 
-
-
-
             switch (position) {
+                case 0:
+                    tasks = TaskDAO.getTasksByList(null);
+                    addTaskButton.setVisibility(View.VISIBLE);
+                    break;
                 case 1:
                     tasks = TaskDAO.getTasksToday();
                     addTaskButton.setVisibility(View.GONE);
@@ -92,8 +98,8 @@ public class HomeActivity extends AppCompatActivity {
 
             itemDecoration =
                     new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-            RecyclerView.addItemDecoration(itemDecoration);
-            setTitle(group.getName());
+            //RecyclerView.addItemDecoration(itemDecoration);
+
         }
 
        /* if (type != null) {
@@ -214,7 +220,8 @@ public class HomeActivity extends AppCompatActivity {
                         task.setDraft(true);
                         task.setImportant(false);
                         task.setDone(false);
-                        task.add("parent", group);
+                        if (group != null)
+                            task.add("parent", group);
 
                         final Task t = task;
                         task.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {

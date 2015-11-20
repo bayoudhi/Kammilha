@@ -77,7 +77,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         mRecyclerView.setAdapter(mAdapter);
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-        mRecyclerView.addItemDecoration(itemDecoration);
+        //mRecyclerView.addItemDecoration(itemDecoration);
 
 
         //set graphic items

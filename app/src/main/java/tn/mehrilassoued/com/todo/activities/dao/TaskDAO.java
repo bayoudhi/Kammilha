@@ -274,7 +274,11 @@ public abstract class TaskDAO {
 
 
         ParseQuery<Task> query = Task.getQuery();
-        query.whereEqualTo("parent", group);
+        if (group == null) {
+            query.whereDoesNotExist("parent");
+        } else {
+            query.whereEqualTo("parent", group);
+        }
         query.orderByAscending("date");
         query.fromLocalDatastore();
         try {
@@ -291,7 +295,11 @@ public abstract class TaskDAO {
 
 
         ParseQuery<Task> query = Task.getQuery();
-        query.whereEqualTo("parent", group);
+        if (group == null) {
+            query.whereDoesNotExist("parent");
+        } else {
+            query.whereEqualTo("parent", group);
+        }
         query.orderByAscending("date");
         query.fromLocalDatastore();
         try {

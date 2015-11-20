@@ -1,19 +1,29 @@
 package tn.mehrilassoued.com.todo.activities;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -25,6 +35,7 @@ import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
 import tn.mehrilassoued.com.todo.activities.adapters.ListAdapter;
+import tn.mehrilassoued.com.todo.activities.dao.TaskDAO;
 import tn.mehrilassoued.com.todo.activities.models.Group;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
@@ -73,13 +84,18 @@ public class ListActivity extends AppCompatActivity {
         inbox.setName("Inbox");
         groups.add(0, inbox);
 
-        Group today = new Group();
-        today.setName("Today");
-        groups.add(1, today);
+       // if(TaskDAO.getTasksTodayCount()!=0){
+            Group today = new Group();
+            today.setName("Today");
+            groups.add(1, today);
+        //}
 
-        Group tomorrow = new Group();
-        tomorrow.setName("In 7 Days");
-        groups.add(2, tomorrow);
+        //if(TaskDAO.getTasksNextDaysCount()!=0){
+            Group tomorrow = new Group();
+            tomorrow.setName("In 7 Days");
+            groups.add(2, tomorrow);
+        //}
+
 
         Group create = new Group();
         create.setName("Create list");
@@ -91,7 +107,7 @@ public class ListActivity extends AppCompatActivity {
 
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-        todayRecyclerView.addItemDecoration(itemDecoration);
+        //todayRecyclerView.addItemDecoration(itemDecoration);
     }
 
     @Override
@@ -105,46 +121,13 @@ public class ListActivity extends AppCompatActivity {
 
 
     public void addTask(final View view) {
-        new MaterialDialog.Builder(this)
-                .title("Add a task")
+        boolean wrapInScrollView = true;
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title("Create task")
+                .customView(R.layout.layout, wrapInScrollView).positiveText("Add").negativeText("Cancel").build();
 
-                .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("", "", new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        if (input.toString().isEmpty()) return;
-
-                        Task task = new Task();
-                        task.setAuthor(ParseUser.getCurrentUser());
-                        task.setUuidString();
-                        task.setName(input.toString());
-                        task.setDraft(true);
-                        task.setImportant(false);
-                        task.setDone(false);
-
-                        saveTask(task);
-                       /* final Task t = task;
-                        task.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-
-
-                                todayAdapter.notifyDataSetChanged();
-                                final View v = view;
-                                Snackbar.make(v, "Task added", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            }
-                        });*/
-
-
-                    }
-                }).positiveText("Add").negativeText("Cancel").
-                show();
-
-
-    }
-
-    public void saveTask(final Task task) {
+        //Create the SPINNER to select the LIST
+        Spinner spinner = (Spinner) dialog.findViewById(R.id.spinner);
         CharSequence[] charSequences = new CharSequence[groups.size() - 3];
         int j = 0;
         for (int i = 0; i < groups.size(); i++) {
@@ -155,41 +138,73 @@ public class ListActivity extends AppCompatActivity {
                 j++;
             }
         }
-        new MaterialDialog.Builder(this)
-                .title("Select List")
-                .items(charSequences)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, final View view, int which, CharSequence text) {
-                        final Intent intent = new Intent(ListActivity.this, HomeActivity.class);
-                        if (which == 0) {
-                            task.add("parent", groups.get(0));
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_dropdown_item, charSequences);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        final EditText taskName = (EditText) dialog.findViewById(R.id.editText);
+
+        final Spinner listId = (Spinner) dialog.findViewById(R.id.spinner);
 
 
-                            intent.putExtra("id", 0);
+        dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
+        taskName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                        } else {
-                            task.add("parent", groups.get(which + 2));
-                            intent.putExtra("id", which + 2);
-                        }
-                        task.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0)
+                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
+                else dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
+            }
+        });
+
+        dialog.getBuilder().onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
 
 
-                                todayAdapter.notifyDataSetChanged();
-                                final View v = view;
-                                Snackbar.make(v, "Task added", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                                startActivity(intent);
+                if (taskName.getText().toString().isEmpty()) return;
 
-                            }
-                        });
+                Task task = new Task();
+                task.setAuthor(ParseUser.getCurrentUser());
+                task.setUuidString();
+                task.setName(taskName.getText().toString());
+                task.setDraft(true);
+                task.setImportant(false);
+                task.setDone(false);
 
-                        return true;
-                    }
-                })
-                .positiveText("Save")
-                .show();
+                saveTask(task, (int) listId.getSelectedItemId());
+            }
+
+
+        });
+
+
+
+        dialog.show();
+
+    }
+
+    public void saveTask(final Task task, final int listId) {
+        if (listId != 0)
+            task.add("parent", groups.get(listId + 2));
+        task.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                todayAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
