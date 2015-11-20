@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import tn.mehrilassoued.com.todo.activities.models.Group;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
 /**
@@ -268,4 +269,37 @@ public abstract class TaskDAO {
     }
 
 
+    public static List<Task> getTasksByList(Group group) {
+        List results = new ArrayList<Task>();
+
+
+        ParseQuery<Task> query = Task.getQuery();
+        query.whereEqualTo("parent", group);
+        query.orderByAscending("date");
+        query.fromLocalDatastore();
+        try {
+            results = query.find();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    public static int getTasksByListCount(Group group) {
+
+
+        ParseQuery<Task> query = Task.getQuery();
+        query.whereEqualTo("parent", group);
+        query.orderByAscending("date");
+        query.fromLocalDatastore();
+        try {
+            return query.count();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }

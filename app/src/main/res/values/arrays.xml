@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="items"><item>task 1</item><item>task 2</item><item>task 3</item>
+    <string-array name="items">
+        <item>task 1</item>
+        <item>task 2</item>
+        <item>task 3</item>
+        <item>task 3</item><item>task 3</item>
+        <item>task 3</item><item>task 3</item><item>task 3</item><item>task 3</item><item>task 3</item>
+
     </string-array>
 </resources>

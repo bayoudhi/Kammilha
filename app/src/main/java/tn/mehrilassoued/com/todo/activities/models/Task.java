@@ -92,7 +92,7 @@ public class Task extends ParseObject {
         return getString("parent");
     }
 
-    public void setList(List list) {
+    public void setList(Group list) {
         put("parent", list);
     }*/
 

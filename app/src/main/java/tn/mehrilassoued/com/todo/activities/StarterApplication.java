@@ -9,42 +9,51 @@
 package tn.mehrilassoued.com.todo.activities;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import tn.mehrilassoued.com.todo.activities.models.List;
+import tn.mehrilassoued.com.todo.activities.models.Group;
 import tn.mehrilassoued.com.todo.activities.models.Subtask;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
 
 public class StarterApplication extends Application {
 
-  public static String TODO_GROUP_NAME="offline";
-  public static String SHARED_PREFERENCES_NAME="com.parse.starter";
-  @Override
-  public void onCreate() {
-    super.onCreate();
+    private static final String PREF_NAME = "com.mehrilassoued.tn";
+    private static boolean firstLaunch;
+    public static String TODO_GROUP_NAME = "offline";
+    public static String SHARED_PREFERENCES_NAME = "com.parse.starter";
 
-    // Enable Local Datastore.
-    Parse.enableLocalDatastore(getApplicationContext());
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-    //Adding subclasses
-    ParseObject.registerSubclass(List.class);
-    ParseObject.registerSubclass(Task.class);
-    ParseObject.registerSubclass(Subtask.class);
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(getApplicationContext());
 
-    // Add your initialization code here
-    Parse.initialize(this, "s0NyXJqvdXFxk9h22RoE4gcRd6yrCHsYn49OomtN", "kzm3h2HWa3Ws7uPWThHwO98oc50LJBnlJvABC67s");
+        //Adding subclasses
+        ParseObject.registerSubclass(Group.class);
+        ParseObject.registerSubclass(Task.class);
+        ParseObject.registerSubclass(Subtask.class);
 
-    ParseUser.enableAutomaticUser();
-    ParseACL defaultACL = new ParseACL();
-    // Optionally enable public read access.
-    // defaultACL.setPublicReadAccess(true);
-    ParseACL.setDefaultACL(defaultACL, true);
+        // Add your initialization code here
+        Parse.initialize(this, "s0NyXJqvdXFxk9h22RoE4gcRd6yrCHsYn49OomtN", "kzm3h2HWa3Ws7uPWThHwO98oc50LJBnlJvABC67s");
+
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
+        // Optionally enable public read access.
+        // defaultACL.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
 
 
-  }
+    }
+
+
 }

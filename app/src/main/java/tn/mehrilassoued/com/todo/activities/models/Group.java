@@ -5,8 +5,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 
-@ParseClassName("List")
-public class List extends ParseObject{
+@ParseClassName("Group")
+public class Group extends ParseObject{
 
 
     //name
@@ -21,8 +21,8 @@ public class List extends ParseObject{
 
 
     //query
-    public static ParseQuery<List> getQuery() {
-        return ParseQuery.getQuery(List.class);
+    public static ParseQuery<Group> getQuery() {
+        return ParseQuery.getQuery(Group.class);
     }
 
     //draft

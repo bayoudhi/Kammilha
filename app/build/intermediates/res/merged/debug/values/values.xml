@@ -2,7 +2,13 @@
 <resources xmlns:ns1="http://schemas.android.com/tools">
     <!-- From: file:/C:/Users/azize/Dropbox/TODO/app/src/main/res/values/arrays.xml -->
     <eat-comment/>
-    <string-array name="items"><item>task 1</item><item>task 2</item><item>task 3</item>
+    <string-array name="items">
+        <item>task 1</item>
+        <item>task 2</item>
+        <item>task 3</item>
+        <item>task 3</item><item>task 3</item>
+        <item>task 3</item><item>task 3</item><item>task 3</item><item>task 3</item><item>task 3</item>
+
     </string-array>
     <!-- From: file:/C:/Users/azize/Dropbox/TODO/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values/values.xml -->
     <eat-comment/>

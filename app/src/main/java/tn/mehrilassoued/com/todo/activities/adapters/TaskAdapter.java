@@ -131,7 +131,7 @@ public class TaskAdapter extends RecyclerView
                 if (isChecked) {
                     holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     try {
-                        Task task = lists.get(position);
+                        Task task = groups.get(position);
                         task.setDone(true);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {
@@ -140,7 +140,7 @@ public class TaskAdapter extends RecyclerView
                 } else {
                     holder.listName.setPaintFlags(holder.listName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     try {
-                        Task task = lists.get(position);
+                        Task task = groups.get(position);
                         task.setDone(false);
                         task.pin(StarterApplication.TODO_GROUP_NAME);
                     } catch (ParseException e) {

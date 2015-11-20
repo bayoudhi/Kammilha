@@ -1,5 +1,6 @@
 package tn.mehrilassoued.com.todo.activities;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.parse.ParseException;
@@ -20,8 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
+import tn.mehrilassoued.com.todo.activities.adapters.ListAdapter;
 import tn.mehrilassoued.com.todo.activities.adapters.TaskAdapter;
 import tn.mehrilassoued.com.todo.activities.dao.TaskDAO;
+import tn.mehrilassoued.com.todo.activities.models.Group;
 import tn.mehrilassoued.com.todo.activities.models.Task;
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,9 +36,10 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private static String LOG_TAG = "HomeActivity";
+    private FloatingActionButton addTaskButton;
 
     private List<Task> tasks;
-    private String type = null;
+    private Group group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //set graphic items
-
+        addTaskButton = (FloatingActionButton) findViewById(R.id.add_task_home);
 
         layoutManager = new LinearLayoutManager(this);
 
@@ -54,14 +59,45 @@ public class HomeActivity extends AppCompatActivity {
 
         RecyclerView.setLayoutManager(layoutManager);
 
-        List<Task> tasks = new ArrayList<>();
-        this.type = getIntent().getStringExtra("show");
+        tasks = new ArrayList<>();
+        int position = getIntent().getIntExtra("id", -1);
+        if (position != -1) {
+            group = ListAdapter.groups.get(position);
+
+            RecyclerView.ItemDecoration itemDecoration;
 
 
-        RecyclerView.ItemDecoration itemDecoration;
 
-        if (type != null) {
-            if (type.equals("all")) {
+
+
+            switch (position) {
+                case 1:
+                    tasks = TaskDAO.getTasksToday();
+                    addTaskButton.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    tasks = TaskDAO.getTasksNextDays();
+                    addTaskButton.setVisibility(View.GONE);
+                    break;
+                default:
+                    tasks = TaskDAO.getTasksByList(group);
+                    addTaskButton.setVisibility(View.VISIBLE);
+                    break;
+            }
+            Adapter = new TaskAdapter(tasks, this);
+            RecyclerView.setAdapter(Adapter);
+            if (tasks.size() == 0)
+                RecyclerView.getLayoutParams().height = 130;
+            else RecyclerView.getLayoutParams().height = 130 * tasks.size();
+
+            itemDecoration =
+                    new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+            RecyclerView.addItemDecoration(itemDecoration);
+            setTitle(group.getName());
+        }
+
+       /* if (type != null) {
+            if (position==0) {
                 tasks = TaskDAO.getTasks();
                 Adapter = new TaskAdapter(tasks, this);
                 RecyclerView.setAdapter(Adapter);
@@ -120,7 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                 RecyclerView.addItemDecoration(itemDecoration);
                 setTitle("HISTORY");
             }
-        }
+        }*/
 
 
     }
@@ -178,14 +214,14 @@ public class HomeActivity extends AppCompatActivity {
                         task.setDraft(true);
                         task.setImportant(false);
                         task.setDone(false);
-
+                        task.add("parent", group);
 
                         final Task t = task;
                         task.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
 
-                                ((TaskAdapter) Adapter).addTask(t, 0);
+                                ((TaskAdapter) Adapter).addTask(t);
                                 ListActivity.check = true;
                                 final View v = view;
                                 Snackbar.make(v, "Task added", Snackbar.LENGTH_LONG)
