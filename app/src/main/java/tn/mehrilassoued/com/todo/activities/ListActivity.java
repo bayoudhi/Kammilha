@@ -196,7 +196,7 @@ public class ListActivity extends AppCompatActivity {
                 if (taskName.getText().toString().isEmpty()) return;
 
                 Task task = new Task();
-                //task.setAuthor(ParseUser.getCurrentUser());//haha
+                task.setAuthor(ParseUser.getCurrentUser());//haha
                 task.setUuidString();
                 task.setName(taskName.getText().toString());
                 task.setDraft(true);

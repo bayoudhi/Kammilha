@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,11 +36,13 @@ public class ListAdapter extends RecyclerView
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
+        ImageView listIcon;
         TextView listName;
         TextView listNumber;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
+            listIcon = (ImageView) itemView.findViewById(R.id.list_icon);
             listName = (TextView) itemView.findViewById(R.id.list_name);
             listNumber = (TextView) itemView.findViewById(R.id.list_count);
 
@@ -91,20 +94,31 @@ public class ListAdapter extends RecyclerView
 
         switch (groups.get(position).getName()) {
             case "Inbox":
+                holder.listIcon.setImageResource(R.drawable.create);
+                holder.listIcon.setImageResource(R.drawable.inbox);
                 holder.listName.setText("Inbox");
                 holder.listNumber.setText(String.valueOf(inboxNumber));
+                holder.listName.setTextColor(Color.parseColor("#616161"));
                 break;
             case "Today":
+                holder.listIcon.setImageResource(R.drawable.create);
+
+                holder.listIcon.setImageResource(R.drawable.today);
                 holder.listName.setText("Today");
                 holder.listNumber.setText(String.valueOf(todayNumber));
+                holder.listName.setTextColor(Color.parseColor("#616161"));
                 break;
             case "Week":
+                holder.listIcon.setImageResource(R.drawable.create);
+                holder.listIcon.setImageResource(R.drawable.week);
                 holder.listName.setText(groups.get(position).getName());
                 holder.listNumber.setText(String.valueOf(nextNumber));
+                holder.listName.setTextColor(Color.parseColor("#616161"));
                 break;
             case "Starred":
+                holder.listIcon.setImageResource(R.drawable.stars);
                 holder.listName.setText(groups.get(position).getName());
-                holder.listName.setTextColor(Color.RED);
+                holder.listName.setTextColor(Color.parseColor("#F44336"));
                 holder.listNumber.setText(String.valueOf(importantNumber));
                 break;
            /* case "Importantt":
@@ -120,17 +134,18 @@ public class ListAdapter extends RecyclerView
                 holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 break;*/
             case "Create list":
+                holder.listIcon.setImageResource(R.drawable.create);
                 holder.listName.setText(groups.get(position).getName());
-                holder.listName.setTextColor(Color.BLUE);
+                holder.listName.setTextColor(Color.parseColor("#1976D2"));
                 holder.listNumber.setText("");
                 break;
             default:
-
+                holder.listIcon.setImageResource(R.drawable.folder);
+                holder.listName.setTextColor(Color.parseColor("#616161"));
                 holder.listName.setText(groups.get(position).getName());
                 if (tasksNumber != 0)
                     holder.listNumber.setText(String.valueOf(tasksNumber));
                 else holder.listNumber.setText("");
-                holder.listName.setTextColor(Color.BLACK);
                 break;
 
 
@@ -157,7 +172,7 @@ public class ListAdapter extends RecyclerView
                                                                        @Override
                                                                        public void onInput(MaterialDialog dialog, CharSequence input) {
                                                                            if (input.toString().isEmpty() || input.toString().equals("Inbox")
-                                                                                   || input.toString().equals("Week") || input.toString().equals("Starred")||
+                                                                                   || input.toString().equals("Week") || input.toString().equals("Starred") ||
                                                                                    input.toString().equals("Today")
                                                                                    )
                                                                                return;

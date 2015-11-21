@@ -43,37 +43,53 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/myRectangleView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:elevation="10dp"
-            android:orientation="vertical"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rectangle"
+            android:orientation="horizontal"
             android:padding="10dp"
-            android:weightSum="1">
-
+            android:weightSum="10">
 
             <CheckBox
                 android:id="@+id/task_done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:layout_marginTop="1dp"
+                android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/task_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:tag="Hover"
-                android:textSize="14sp" />
-            <TextView
-                android:id="@+id/task_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:tag="Hover"
-                android:textSize="8sp"
-                android:textColor="@color/md_material_blue_800"
-                />
+                android:layout_weight="8"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/task_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:tag="Hover"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/task_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:tag="Hover"
+                    android:textColor="#212121"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:src="@drawable/star" />
         </LinearLayout>
     </com.daimajia.swipe.SwipeLayout>
 </LinearLayout>

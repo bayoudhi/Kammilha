@@ -12,73 +12,138 @@
     tools:context="tn.mehrilassoued.com.todo.activities.ListActivity"
     tools:showIn="@layout/activity_list">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/task_name_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
-
-        <EditText
-            android:id="@+id/task_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-
-            android:singleLine="true"
-            android:textSize="42dp" />
-
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/task_note_container"
+    <LinearLayout
+        android:id="@+id/time_group_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/task_name_container"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
+        android:onClick="setDate">
 
-        <EditText
-            android:id="@+id/task_note"
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/time" />
+
+        <TextView
+            android:id="@+id/time_date_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Note"
-            android:inputType="textMultiLine"
-            android:textSize="12dp" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="48dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Set time and date"
+            android:textSize="20dp"></TextView>
+    </LinearLayout>
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/task_note_container"
-        android:layout_centerHorizontal="true"
-        android:onClick="setDate"
-        android:text="Select date"
-
-        />
+    <View
+        android:id="@+id/time_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include"
-
         android:text=""
         android:textColor="#00c2ff"
         android:textSize="10dp" />
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
+        android:id="@+id/note_group_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_divider"
+        android:layout_marginTop="16dp">
 
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/note" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/task_name_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:id="@+id/task_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="42dp"
+                android:visibility="gone" />
+
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/task_note_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/task_name_container"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/task_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Note"
+                android:layout_marginLeft="16dp"
+                android:inputType="textMultiLine"
+                android:textSize="12dp" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/subtask_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/note_group_view"
+        android:layout_marginTop="16dp"
+        android:onClick="addSubtask">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/subtask" />
+
+        <TextView
+            android:id="@+id/subtask_add_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Add a subtask"
+            android:textSize="20dp"></TextView>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/subtasks_recycler_view"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/darker_gray" />
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/subtasks_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/add_subtask_button"
+        android:layout_below="@+id/subtask_view_group"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:scrollbars="vertical" />
 
     <Button
@@ -88,8 +153,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="16dp"
         android:enabled="true"
-        android:onClick="addSubtask"
-        android:text="Add Subtask" />
+        android:text="Add Subtask"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -47,7 +47,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
     private EditText noteEditText;
     private Button addSubtaskButton;
     private TextView dateTimeTextView;
-
+    private TextView timeDateTextView;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -83,8 +83,9 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         //set graphic items
         nameEditText = (EditText) findViewById(R.id.task_name);
         noteEditText = (EditText) findViewById(R.id.task_note);
-        addSubtaskButton = (Button) findViewById(R.id.add_subtask_button);
+        //addSubtaskButton = (Button) findViewById(R.id.add_subtask_button);
         dateTimeTextView = (TextView) findViewById(R.id.date);
+        timeDateTextView = (TextView) findViewById(R.id.time_date_text_view);
 
         if (task.get("date") != null) {
             DateFormat dateFormat = new SimpleDateFormat();
@@ -179,7 +180,6 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
     }
 
 
-
     public void setTime(View view) {
         Calendar now = Calendar.getInstance();
         TimePickerDialog dpd = TimePickerDialog.newInstance(TaskActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
@@ -195,8 +195,6 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
                 now.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getFragmentManager(), "Datepickerdialog");
-
-
     }
 
     @Override
@@ -205,13 +203,11 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         task.put("date", date);
 
         task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
-        dateTimeTextView.setText(day + "/" + (month + 1) + "/" + year);
+        timeDateTextView.setText(day + "/" + (month + 1) + "/" + year);
 
         Calendar now = Calendar.getInstance();
         TimePickerDialog dpd = TimePickerDialog.newInstance(TaskActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
         dpd.show(getFragmentManager(), "Timepickerdialog");
-
-
     }
 
     @Override
