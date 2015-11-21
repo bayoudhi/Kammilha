@@ -49,6 +49,7 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager todayLayoutManager;
 
     private List<Group> groups;
+    private int groupsNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,26 +77,32 @@ public class ListActivity extends AppCompatActivity {
         query.fromLocalDatastore();
         try {
             groups = query.find();
-
+            groupsNumber = query.count();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         Group inbox = new Group();
         inbox.setName("Inbox");
         groups.add(0, inbox);
 
-       // if(TaskDAO.getTasksTodayCount()!=0){
+
+        if (TaskDAO.getTasksNextDaysCount() != 0) {
+            Group tomorrow = new Group();
+            tomorrow.setName("Week");
+            groups.add(1, tomorrow);
+        }
+
+        if (TaskDAO.getTasksTodayCount() != 0) {
             Group today = new Group();
             today.setName("Today");
             groups.add(1, today);
-        //}
-
-        //if(TaskDAO.getTasksNextDaysCount()!=0){
-            Group tomorrow = new Group();
-            tomorrow.setName("In 7 Days");
-            groups.add(2, tomorrow);
-        //}
-
+        }
+        if (TaskDAO.getTasksImportantCount() != 0) {
+            Group starred = new Group();
+            starred.setName("Starred");
+            groups.add(1, starred);
+        }
 
         Group create = new Group();
         create.setName("Create list");
@@ -117,6 +124,7 @@ public class ListActivity extends AppCompatActivity {
             todayAdapter.notifyDataSetChanged();
             check = false;
         }
+        loadLists();
     }
 
 
@@ -128,14 +136,24 @@ public class ListActivity extends AppCompatActivity {
 
         //Create the SPINNER to select the LIST
         Spinner spinner = (Spinner) dialog.findViewById(R.id.spinner);
-        CharSequence[] charSequences = new CharSequence[groups.size() - 3];
+        CharSequence[] charSequences = new CharSequence[groupsNumber + 1];
+        final int[] indexes = new int[groupsNumber + 1];
         int j = 0;
         for (int i = 0; i < groups.size(); i++) {
-            if (i == 1 || i == 2 || i == (groups.size() - 1)) {
-
-            } else {
-                charSequences[j] = groups.get(i).getName();
-                j++;
+            switch (groups.get(i).getName()) {
+                case "Today":
+                    break;
+                case "Week":
+                    break;
+                case "Starred":
+                    break;
+                case "Create list":
+                    break;
+                default:
+                    indexes[j] = i;
+                    charSequences[j] = groups.get(i).getName();
+                    j++;
+                    break;
             }
         }
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -185,12 +203,12 @@ public class ListActivity extends AppCompatActivity {
                 task.setImportant(false);
                 task.setDone(false);
 
-                saveTask(task, (int) listId.getSelectedItemId());
+
+                saveTask(task, indexes[(int) listId.getSelectedItemId()]);
             }
 
 
         });
-
 
 
         dialog.show();
@@ -199,7 +217,7 @@ public class ListActivity extends AppCompatActivity {
 
     public void saveTask(final Task task, final int listId) {
         if (listId != 0)
-            task.add("parent", groups.get(listId + 2));
+            task.add("parent", groups.get(listId));
         task.pinInBackground(StarterApplication.TODO_GROUP_NAME, new SaveCallback() {
             @Override
             public void done(ParseException e) {

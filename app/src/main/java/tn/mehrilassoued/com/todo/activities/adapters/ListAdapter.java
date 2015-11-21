@@ -98,9 +98,13 @@ public class ListAdapter extends RecyclerView
                 holder.listName.setText("Today");
                 holder.listNumber.setText(String.valueOf(todayNumber));
                 break;
-            case "In 7 Days":
+            case "Week":
                 holder.listName.setText(groups.get(position).getName());
                 holder.listNumber.setText(String.valueOf(nextNumber));
+                break;
+            case "Starred":
+                holder.listName.setText(groups.get(position).getName());
+                holder.listNumber.setText(String.valueOf(importantNumber));
                 break;
            /* case "Importantt":
 
@@ -151,7 +155,10 @@ public class ListAdapter extends RecyclerView
                                                                    .input("", "", new MaterialDialog.InputCallback() {
                                                                        @Override
                                                                        public void onInput(MaterialDialog dialog, CharSequence input) {
-                                                                           if (input.toString().isEmpty())
+                                                                           if (input.toString().isEmpty() || input.toString().equals("Inbox")
+                                                                                   || input.toString().equals("Week") || input.toString().equals("Starred")||
+                                                                                   input.toString().equals("Today")
+                                                                                   )
                                                                                return;
 
                                                                            Group group = new Group();
