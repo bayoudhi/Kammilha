@@ -72,24 +72,30 @@ public class HomeActivity extends AppCompatActivity {
             RecyclerView.ItemDecoration itemDecoration;
 
 
-            switch (position) {
-                case 0:
-                    tasks = TaskDAO.getTasksByList(null);
-                    addTaskButton.setVisibility(View.VISIBLE);
-                    break;
-                case 1:
-                    tasks = TaskDAO.getTasksToday();
-                    addTaskButton.setVisibility(View.GONE);
-                    break;
-                case 2:
-                    tasks = TaskDAO.getTasksNextDays();
-                    addTaskButton.setVisibility(View.GONE);
-                    break;
-                default:
-                    tasks = TaskDAO.getTasksByList(group);
-                    addTaskButton.setVisibility(View.VISIBLE);
-                    break;
+            if (position == 0) {
+                tasks = TaskDAO.getTasksByList(null);
+                addTaskButton.setVisibility(View.VISIBLE);
+            } else {
+                switch (ListAdapter.groups.get(position).getName()) {
+                    case "Today":
+                        tasks = TaskDAO.getTasksToday();
+                        addTaskButton.setVisibility(View.GONE);
+                        break;
+                    case "Week":
+                        tasks = TaskDAO.getTasksNextDays();
+                        addTaskButton.setVisibility(View.GONE);
+                        break;
+                    case "Starred":
+                        tasks = TaskDAO.getTasksImportant();
+                        addTaskButton.setVisibility(View.GONE);
+                        break;
+                    default:
+                        tasks = TaskDAO.getTasksByList(group);
+                        addTaskButton.setVisibility(View.VISIBLE);
+                        break;
+                }
             }
+
             Adapter = new TaskAdapter(tasks, this);
             RecyclerView.setAdapter(Adapter);
             if (tasks.size() == 0)
