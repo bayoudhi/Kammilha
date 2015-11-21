@@ -104,6 +104,7 @@ public class ListAdapter extends RecyclerView
                 break;
             case "Starred":
                 holder.listName.setText(groups.get(position).getName());
+                holder.listName.setTextColor(Color.RED);
                 holder.listNumber.setText(String.valueOf(importantNumber));
                 break;
            /* case "Importantt":
