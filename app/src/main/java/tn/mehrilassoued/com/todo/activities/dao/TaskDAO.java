@@ -15,6 +15,7 @@ import tn.mehrilassoued.com.todo.activities.models.Task;
  * Created by azize on 11/16/2015.
  */
 public abstract class TaskDAO {
+
     public static List<Task> getTasksDone() {
         List results = new ArrayList<Task>();
 

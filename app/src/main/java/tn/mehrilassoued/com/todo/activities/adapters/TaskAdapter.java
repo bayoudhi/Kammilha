@@ -32,7 +32,7 @@ public class TaskAdapter extends RecyclerView
         .Adapter<TaskAdapter
         .DataObjectHolder> {
     private static String LOG_TAG = "TaskAdapter";
-    public  static List<Task> tasks;
+    public static List<Task> tasks;
     private Context context;
     private static MyClickListener myClickListener;
 
@@ -117,10 +117,10 @@ public class TaskAdapter extends RecyclerView
             holder.task_name.setTextColor(Color.GRAY);
         }
 
-        if (task.get("date")!=null) {
+        if (task.get("date") != null) {
             DateFormat dateFormat = new SimpleDateFormat();
             holder.task_date.setText(dateFormat.format(task.getDate("date")));
-        }else{
+        } else {
             holder.task_date.setText("");
 
         }
@@ -155,7 +155,7 @@ public class TaskAdapter extends RecyclerView
             public void onClick(View v) {
 
                 setTaskImportant(position);
-                ListActivity.check=true;
+                ListActivity.check = true;
             }
         });
 
@@ -164,7 +164,7 @@ public class TaskAdapter extends RecyclerView
             public void onClick(View v) {
                 setTaskDone(position);
                 setAllSubtasksDone(position);
-                ListActivity.check=true;
+                ListActivity.check = true;
             }
         });
 
@@ -177,7 +177,7 @@ public class TaskAdapter extends RecyclerView
                 Intent intent = new Intent(context, TaskActivity.class);
 
                 intent.putExtra("id", String.valueOf(position));
-                intent.putExtra("from","all");
+                intent.putExtra("from", "all");
                 context.startActivity(intent);
             }
         });
@@ -271,7 +271,7 @@ public class TaskAdapter extends RecyclerView
         public void onItemClick(int position, View v);
     }
 
-    public  List<Task> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
