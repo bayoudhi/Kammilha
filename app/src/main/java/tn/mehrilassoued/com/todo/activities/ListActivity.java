@@ -105,7 +105,7 @@ public class ListActivity extends AppCompatActivity {
         }
 
         Group create = new Group();
-        create.setName("Add a list");
+        create.setName("Create list");
         groups.add(groups.size(), create);
 
 
