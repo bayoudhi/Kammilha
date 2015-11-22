@@ -2,8 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="tn.mehrilassoued.com.todo.activities.TaskActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="101" app:showAsAction="never" />
-    <item android:id="@+id/action_delete" android:title="@string/action_delete"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/action_rename"
+        android:icon="@drawable/rename"
+        android:orderInCategory="100"
+        android:title="@string/action_rename"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/delete"
+        android:orderInCategory="100"
+        android:title="@string/action_delete"
+        app:showAsAction="never" />
+
 </menu>

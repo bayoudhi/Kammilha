@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -43,10 +44,10 @@ import tn.mehrilassoued.com.todo.activities.models.Task;
 public class TaskActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private int id;
     private Task task;
+    private EditText taskNameToolbarEditText;
     private EditText nameEditText;
     private EditText noteEditText;
     private Button addSubtaskButton;
-    private TextView dateTimeTextView;
     private TextView timeDateTextView;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -60,7 +61,15 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         setContentView(R.layout.activity_task);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         id = Integer.valueOf(getIntent().getStringExtra("id"));
         String from = getIntent().getStringExtra("from");
 
@@ -81,15 +90,15 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
 
         //set graphic items
+        taskNameToolbarEditText = (EditText) findViewById(R.id.task_name_toolbar_edit_text);
         nameEditText = (EditText) findViewById(R.id.task_name);
         noteEditText = (EditText) findViewById(R.id.task_note);
         //addSubtaskButton = (Button) findViewById(R.id.add_subtask_button);
-        dateTimeTextView = (TextView) findViewById(R.id.date);
         timeDateTextView = (TextView) findViewById(R.id.time_date_text_view);
 
         if (task.get("date") != null) {
             DateFormat dateFormat = new SimpleDateFormat();
-            dateTimeTextView.setText(dateFormat.format(task.getDate("date")));
+            timeDateTextView.setText(dateFormat.format(task.getDate("date")));
         }
 
 
@@ -157,8 +166,8 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         if (getDataSet().isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
         }
-
-        setTitle(task.getName());
+        taskNameToolbarEditText.setText(task.getName());
+//        setTitle(task.getName());
 
     }
 
@@ -224,7 +233,7 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
 
         DateFormat dateFormat = new SimpleDateFormat();
-        dateTimeTextView.setText(dateFormat.format(date));
+        timeDateTextView.setText(dateFormat.format(date));
         ListActivity.check = true;
     }
 
@@ -244,10 +253,44 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+
+        if (id == R.id.action_rename) {
+            if (taskNameToolbarEditText.getText().toString().equals("")) {
+                Toast.makeText(TaskActivity.this, "The task name should not be empty!", Toast.LENGTH_SHORT).show();
+            } else if (taskNameToolbarEditText.getText().toString().equals(task.getName())) {
+                Toast.makeText(TaskActivity.this, "The new task name should be different from the old one!", Toast.LENGTH_SHORT).show();
+            } else if (!taskNameToolbarEditText.getText().toString().equals("")
+                    && !taskNameToolbarEditText.getText().toString().equals(task.getName())) {
+
+                new MaterialDialog.Builder(this)
+                        .title("Rename the task")
+                        .content("Are you sure?")
+                        .positiveText("Yes").negativeText("No").
+                        onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                task.setName(taskNameToolbarEditText.getText().toString());
+                                task.pinInBackground(StarterApplication.TODO_GROUP_NAME);
+                                Toast.makeText(TaskActivity.this, "The task name has been updated", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).
+                        show();
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
+
+
+        if (id == R.id.action_settings)
+
+        {
             return true;
         }
-        if (id == R.id.action_delete) {
+
+        if (id == R.id.action_delete)
+
+        {
             new MaterialDialog.Builder(this)
                     .title("Delete Task")
                     .content("Are you sure?")
@@ -270,7 +313,10 @@ public class TaskActivity extends AppCompatActivity implements TimePickerDialog.
 
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.
+
+                onOptionsItemSelected(item);
+
     }
 
     @Override

@@ -13,6 +13,7 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <string name="title_activity_task">Task</string>
+    <string name="action_rename">Rename</string>
     <string name="action_delete">Delete</string>
     <string name="title">Title</string>
     <string name="choose">Choose</string>

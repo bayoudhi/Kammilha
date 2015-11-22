@@ -555,6 +555,7 @@
     <!-- From: file:/C:/Users/Sofienne%20LASSOUED/AndroidStudioProjects/Kammilha/Kammilha/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_delete">Delete</string>
+    <string name="action_rename">Rename</string>
     <string name="action_settings">Settings</string>
     <string name="app_name">TODO</string>
     <!-- From: file:/C:/Users/Sofienne%20LASSOUED/AndroidStudioProjects/Kammilha/Kammilha/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/res/values/values.xml -->

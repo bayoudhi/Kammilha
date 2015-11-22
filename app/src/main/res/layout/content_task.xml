@@ -22,7 +22,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="6dp"
-            android:src="@drawable/time" />
+            android:src="@drawable/timer" />
 
         <TextView
             android:id="@+id/time_date_text_view"
@@ -38,17 +38,9 @@
         android:id="@+id/time_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/time_group_view"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="50dp"
         android:background="@android:color/darker_gray" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="#00c2ff"
-        android:textSize="10dp" />
 
     <LinearLayout
         android:id="@+id/note_group_view"
@@ -60,8 +52,7 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/note" />
+            android:src="@drawable/ic_note_add_black_36dp" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/task_name_container"
@@ -84,19 +75,19 @@
             android:id="@+id/task_note_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/task_name_container"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp">
+            >
 
             <EditText
                 android:id="@+id/task_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:background="#99FFEB3B"
                 android:ems="10"
                 android:hint="Note"
-                android:layout_marginLeft="16dp"
                 android:inputType="textMultiLine"
-                android:textSize="12dp" />
+                android:textSize="18dp" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -130,9 +121,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_above="@+id/subtasks_recycler_view"
+        android:layout_below="@+id/subtask_view_group"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray" />
 
     <android.support.v7.widget.RecyclerView

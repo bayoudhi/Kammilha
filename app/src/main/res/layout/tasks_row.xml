@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:tag="Hover"
-                    android:textColor="#212121"
+                    android:textColor="#ffffff"
                     android:textSize="12dp" />
 
             </LinearLayout>

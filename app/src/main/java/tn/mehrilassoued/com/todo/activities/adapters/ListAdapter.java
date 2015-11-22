@@ -94,26 +94,26 @@ public class ListAdapter extends RecyclerView
 
         switch (groups.get(position).getName()) {
             case "Inbox":
-                holder.listIcon.setImageResource(R.drawable.create);
+                holder.listIcon.setImageResource(R.drawable.list_add);
                 holder.listIcon.setImageResource(R.drawable.inbox);
                 holder.listName.setText("Inbox");
                 holder.listNumber.setText(String.valueOf(inboxNumber));
                 holder.listName.setTextColor(Color.parseColor("#616161"));
                 break;
             case "Today":
-                holder.listIcon.setImageResource(R.drawable.create);
+                holder.listIcon.setImageResource(R.drawable.list_add);
 
                 holder.listIcon.setImageResource(R.drawable.today);
                 holder.listName.setText("Today");
                 holder.listNumber.setText(String.valueOf(todayNumber));
-                holder.listName.setTextColor(Color.parseColor("#616161"));
+                holder.listName.setTextColor(Color.parseColor("#4CAF50"));
                 break;
             case "Week":
-                holder.listIcon.setImageResource(R.drawable.create);
+                holder.listIcon.setImageResource(R.drawable.list_add);
                 holder.listIcon.setImageResource(R.drawable.week);
                 holder.listName.setText(groups.get(position).getName());
                 holder.listNumber.setText(String.valueOf(nextNumber));
-                holder.listName.setTextColor(Color.parseColor("#616161"));
+                holder.listName.setTextColor(Color.parseColor("#FF9800"));
                 break;
             case "Starred":
                 holder.listIcon.setImageResource(R.drawable.stars);
@@ -134,14 +134,14 @@ public class ListAdapter extends RecyclerView
                 holder.listName.setPaintFlags(holder.listName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 break;*/
             case "Create list":
-                holder.listIcon.setImageResource(R.drawable.create);
+                holder.listIcon.setImageResource(R.drawable.list_add);
                 holder.listName.setText(groups.get(position).getName());
                 holder.listName.setTextColor(Color.parseColor("#1976D2"));
                 holder.listNumber.setText("");
                 break;
             default:
                 holder.listIcon.setImageResource(R.drawable.folder);
-                holder.listName.setTextColor(Color.parseColor("#616161"));
+                holder.listName.setTextColor(Color.parseColor("#212121"));
                 holder.listName.setText(groups.get(position).getName());
                 if (tasksNumber != 0)
                     holder.listNumber.setText(String.valueOf(tasksNumber));
