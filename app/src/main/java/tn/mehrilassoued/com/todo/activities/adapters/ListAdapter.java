@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import tn.mehrilassoued.com.todo.R;
@@ -143,9 +144,11 @@ public class ListAdapter extends RecyclerView
                 holder.listIcon.setImageResource(R.drawable.folder);
                 holder.listName.setTextColor(Color.parseColor("#212121"));
                 holder.listName.setText(groups.get(position).getName());
+                holder.listName.setText(groups.get(position).getName());
                 if (tasksNumber != 0)
                     holder.listNumber.setText(String.valueOf(tasksNumber));
                 else holder.listNumber.setText("");
+
                 break;
 
 
